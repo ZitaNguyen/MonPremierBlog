@@ -1,13 +1,13 @@
 {
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "src/"
         },
         "classmap": [
-            "app/"
+            "src/"
         ]
     },
     "require": {
-        "twig/twig": "^2.0"
+        "twig/twig": "^3.0"
     }
 }
