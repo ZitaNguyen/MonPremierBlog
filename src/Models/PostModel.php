@@ -55,16 +55,14 @@ class PostModel
             AND p.id = $id
             ORDER BY create_date DESC"
         );
-
-        while (($row = $sql->fetch())) {
-            $post = new Post();
-            $post->id = $row['id'];
-            $post->title = $row['title'];
-            $post->createDate = $row['createDate'];
-            $post->content = $row['content'];
-            $post->excerpt = $row['excerpt'];
-            $post->author = $row['name'];
-        }
+        $row = $sql->fetch();
+        $post = new Post();
+        $post->id = $row['id'];
+        $post->title = $row['title'];
+        $post->createDate = $row['createDate'];
+        $post->content = $row['content'];
+        $post->excerpt = $row['excerpt'];
+        $post->author = $row['name'];
         return $post;
     }
 }
