@@ -2,6 +2,11 @@
 
 namespace App\Controllers\PostController;
 
+require_once('src/Library/Database.php');
+require_once('src/Models/PostModel.php');
+
+use App\Library\Database\DatabaseConnection;
+use App\Model\PostModel\PostModel;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
@@ -9,26 +14,13 @@ class PostController
 {
     public function getPosts()
     {
-        $loader = new FilesystemLoader('templates');
-        $twig = new Environment($loader);
-        $posts = [
-            [
-                'title' => 'Post1',
-                'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?',
-                'content' => '                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur',
-                'author' => 'Zita',
-                'create_date' => '2023-01-01'
-            ],
-            [
-                'title' => 'Post2',
-                'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?',
-                'content' => '                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur',
-                'author' => 'Zita',
-                'create_date' => '2023-01-01'
-            ]
-        ];
+        $loader     = new FilesystemLoader('templates');
+        $twig       = new Environment($loader);
+        $connection = new DatabaseConnection;
+        $postModel  = new PostModel();
+
+        $postModel->connection = $connection;
+        $posts = $postModel->getPosts();
         echo $twig->render('posts.html.twig', ['posts' => $posts]);
     }
 }
