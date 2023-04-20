@@ -45,7 +45,7 @@ class PostModel
         return $posts;
     }
 
-    public function getPost($id): array
+    public function getPost($id)
     {
         $sql = $this->connection->getConnection()->query(
             "SELECT p.id, p.title, p.excerpt, p.content, DATE_FORMAT(p.create_date, '%d/%m/%Y') AS createDate, ps.name

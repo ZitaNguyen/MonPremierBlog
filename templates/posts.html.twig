@@ -25,7 +25,7 @@
             {% for post in posts %}
             <!-- Post preview-->
             <div class="post-preview">
-                <a href="post.php">
+                <a href="../post-{{ post.id }}">
                     <h2 class="post-title">{{ post.title }}</h2>
                     <h3 class="post-subtitle">{{ post.excerpt }}</h3>
                 </a>
