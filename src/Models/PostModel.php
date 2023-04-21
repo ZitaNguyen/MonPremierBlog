@@ -6,16 +6,6 @@ require_once('src/Library/Database.php');
 
 use App\Library\Database\DatabaseConnection;
 
-class Post
-{
-    public string $id;
-    public string $title;
-    public string $createDate;
-    public string $content;
-    public string $excerpt;
-    public string $author;
-}
-
 class PostModel
 {
 
@@ -23,46 +13,42 @@ class PostModel
 
     public function getPosts(): array
     {
-        $sql = $this->connection->getConnection()->query(
+        $sql = $this->connection->getConnection()->prepare(
             "SELECT p.id, p.title, p.excerpt, DATE_FORMAT(p.create_date, '%d/%m/%Y') AS createDate, ps.name
             FROM Post p
             INNER JOIN Person ps
             WHERE p.author_id = ps.id
-            ORDER BY create_date DESC"
+            ORDER BY create_date DESC
+            LIMIT 5"
         );
-
-        $posts = [];
-        while (($row = $sql->fetch())) {
-            $post = new Post();
-            $post->id = $row['id'];
-            $post->title = $row['title'];
-            $post->createDate = $row['createDate'];
-            $post->excerpt = $row['excerpt'];
-            $post->author = $row['name'];
-
-            $posts[] = $post;
-        }
-        return $posts;
+        $sql->execute();
+        return $sql->fetchAll(\PDO::FETCH_OBJ);
     }
 
     public function getPost($id)
     {
-        $sql = $this->connection->getConnection()->query(
+        $sql = $this->connection->getConnection()->prepare(
             "SELECT p.id, p.title, p.excerpt, p.content, DATE_FORMAT(p.create_date, '%d/%m/%Y') AS createDate, ps.name
             FROM Post p
             INNER JOIN Person ps
             WHERE p.author_id = ps.id
-            AND p.id = $id
-            ORDER BY create_date DESC"
+            AND p.id = $id"
         );
-        $row = $sql->fetch();
-        $post = new Post();
-        $post->id = $row['id'];
-        $post->title = $row['title'];
-        $post->createDate = $row['createDate'];
-        $post->content = $row['content'];
-        $post->excerpt = $row['excerpt'];
-        $post->author = $row['name'];
-        return $post;
+        $sql->execute();
+        return $sql->fetch();
+    }
+
+    public function getLastPost()
+    {
+        $sql = $this->connection->getConnection()->prepare(
+            "SELECT p.id, p.title, p.excerpt, DATE_FORMAT(p.create_date, '%d/%m/%Y') AS createDate, ps.name
+            FROM Post p
+            INNER JOIN Person ps
+            WHERE p.author_id = ps.id
+            ORDER BY create_date DESC
+            LIMIT 1"
+        );
+        $sql->execute();
+        return $sql->fetch();
     }
 }
