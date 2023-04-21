@@ -16,6 +16,9 @@ switch ($uri) {
     case '/blog':
         (new PostController())->getPosts();
         break;
+    case '/add-post':
+        (new PostController())->addPost();
+        break;
     default:
         preg_match('/[0-9]+/', $uri, $matches);
         $id = $matches[0];

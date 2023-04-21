@@ -35,4 +35,16 @@ class PostController
         $post = $postModel->getPost($id);
         echo $twig->render('post.html.twig', ['post' => $post]);
     }
+
+    public function addPost()
+    {
+        $loader     = new FilesystemLoader('templates');
+        $twig       = new Environment($loader);
+        // $connection = new DatabaseConnection;
+        // $postModel  = new PostModel();
+
+        // $postModel->connection = $connection;
+        // $post = $postModel->addPost();
+        echo $twig->render('add-post.html.twig');
+    }
 }
