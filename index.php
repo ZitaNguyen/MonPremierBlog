@@ -17,7 +17,9 @@ switch ($uri) {
         (new PostController())->getPosts();
         break;
     default:
-        // TODO
+        preg_match('/[0-9]+/', $uri, $matches);
+        $id = $matches[0];
+        (new PostController())->getPost($id);
         break;
 }
 

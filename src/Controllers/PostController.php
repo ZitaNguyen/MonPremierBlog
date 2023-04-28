@@ -23,4 +23,16 @@ class PostController
         $posts = $postModel->getPosts();
         echo $twig->render('posts.html.twig', ['posts' => $posts]);
     }
+
+    public function getPost($id)
+    {
+        $loader     = new FilesystemLoader('templates');
+        $twig       = new Environment($loader);
+        $connection = new DatabaseConnection;
+        $postModel  = new PostModel();
+
+        $postModel->connection = $connection;
+        $post = $postModel->getPost($id);
+        echo $twig->render('post.html.twig', ['post' => $post]);
+    }
 }

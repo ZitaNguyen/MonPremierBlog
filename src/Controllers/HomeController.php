@@ -2,6 +2,11 @@
 
 namespace App\Controllers\HomeController;
 
+require_once('src/Library/Database.php');
+require_once('src/Models/PostModel.php');
+
+use App\Library\Database\DatabaseConnection;
+use App\Model\PostModel\PostModel;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
@@ -11,14 +16,11 @@ class HomeController
     {
         $loader = new FilesystemLoader('templates');
         $twig = new Environment($loader);
-        $post = [
-            'title' => 'Post1',
-            'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?',
-            'content' => '                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur',
-            'author' => 'Zita',
-            'create_date' => '2023-01-01'
-        ];
+        $connection = new DatabaseConnection;
+        $postModel  = new PostModel();
+
+        $postModel->connection = $connection;
+        $post = $postModel->getLastPost();
         echo $twig->render('home.html.twig', ['post' => $post]);
     }
 }
