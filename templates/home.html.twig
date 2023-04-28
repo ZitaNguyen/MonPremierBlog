@@ -27,14 +27,14 @@
             <h1>Mon Dernier Article</h1>
             <!-- Post preview-->
             <div class="post-preview">
-                <a href="post.html">
-                    <p>Post title</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
+                <a href="#!">
+                    <h2 class="post-title">{{ post.title }}</h2>
+                    <h3 class="post-subtitle">{{ post.excerpt }}</h3>
                 </a>
                 <p class="post-meta">
                     Posted by
-                    <a href="#!">Start Bootstrap</a>
-                    on September 24, 2023
+                    <a href="#!">{{post.author}}</a>
+                    on {{post.create_date}}
                 </p>
             </div>
             <!-- Divider-->
@@ -46,7 +46,7 @@
             <div class="d-flex gap-5 my-5">
                 <img src="assets/img/about-bg.jpg" class="d-none d-lg-block" alt="About Zita">
                 <p>Zita est une fullstack développeuse Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
             <!-- Divider-->
             <hr class="my-4" />
