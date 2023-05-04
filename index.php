@@ -1,14 +1,11 @@
 <?php
 include 'vendor/autoload.php';
 
-use App\Library;
 use App\Controllers\HomeController;
 use App\Controllers\PostController;
 use App\Controllers\AdminController;
 
 define('ROOT_PATH', __DIR__ . '/src/');
-
-require ROOT_PATH . 'Library/Loader.php';
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 

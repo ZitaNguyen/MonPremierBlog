@@ -2,17 +2,13 @@
 
 namespace App\Controllers;
 
-
+use App\Controllers\AbstractController;
 use App\Models\AdminModel;
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
 
-class AdminController
+class AdminController extends AbstractController
 {
     public function addPost()
     {
-        $loader     = new FilesystemLoader('templates');
-        $twig       = new Environment($loader);
         $adminModel  = new AdminModel();
 
         if (isset($_POST['submitAddButton']))
@@ -49,6 +45,6 @@ class AdminController
                 throw new \Exception('Tous les champs doivent être remplis.');
         }
 
-        echo $twig->render('add-post.html.twig');
+        $this->twig->display('add-post.html.twig');
     }
 }

@@ -2,19 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Controllers\AbstractController;
 use App\Models\PostModel;
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
 
-class HomeController
+class HomeController extends AbstractController
 {
     public function displayHomePage()
     {
-        $loader = new FilesystemLoader('templates');
-        $twig = new Environment($loader);
         $postModel  = new PostModel;
-
         $post = $postModel->getLastPost();
-        echo $twig->render('home.html.twig', ['post' => $post]);
+        $this->twig->display('home.html.twig', ['post' => $post]);
     }
 }
