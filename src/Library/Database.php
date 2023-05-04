@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Library\Database;
+namespace App\Library;
 
-class DatabaseConnection
+use App\Library\Config;
+
+class Database extends \PDO
 {
-    public ?\PDO $database = null;
-
-    public function getConnection(): \PDO
+    public function __construct()
     {
-        if ($this->database === null) {
-            $this->database = new \PDO('mysql:host=127.0.0.1;dbname=monpremierblog;port=8889;charset=utf8', 'root', 'root');
-        }
-
-        return $this->database;
+        parent::__construct('mysql:host=' . Config::DB_HOST . ';dbname=' . Config::DB_NAME . ';port=' . Config::DB_PORT . ';charset=' . Config::DB_CHARSET, Config::DB_USR, Config::DB_PW);
+        $this->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 }

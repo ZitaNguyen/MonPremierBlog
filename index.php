@@ -1,11 +1,14 @@
 <?php
 include 'vendor/autoload.php';
 
-require_once('src/Controllers/HomeController.php');
-require_once('src/Controllers/PostController.php');
+use App\Library;
+use App\Controllers\HomeController;
+use App\Controllers\PostController;
+use App\Controllers\AdminController;
 
-use App\Controllers\HomeController\HomeController;
-use App\Controllers\PostController\PostController;
+define('ROOT_PATH', __DIR__ . '/src/');
+
+require ROOT_PATH . 'Library/Loader.php';
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -17,7 +20,7 @@ switch ($uri) {
         (new PostController())->getPosts();
         break;
     case '/add-post':
-        (new PostController())->addPost();
+        (new AdminController())->addPost();
         break;
     default:
         preg_match('/[0-9]+/', $uri, $matches);
