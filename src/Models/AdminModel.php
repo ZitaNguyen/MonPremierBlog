@@ -28,15 +28,15 @@ class AdminModel
         return $sql->execute();
     }
 
-    // public function postImg($tmp_name, $extension)
-    // {
-    //   $i = [
-    //     'id'     => $this->oDb->lastInsertId(),
-    //     'image'  => $this->oDb->lastInsertId().$extension
-    //   ];
+    public function postImg($tmp_name, $extension)
+    {
+      $i = [
+        'id'     => $this->Db->lastInsertId(),
+        'photo'  => $this->Db->lastInsertId().$extension
+      ];
 
-    //   $oStmt = $this->oDb->prepare('UPDATE Posts SET image = :image WHERE id = :id');
-    //   move_uploaded_file($tmp_name,"static/img/posts/".$i['image']);
-    //   return $oStmt->execute($i);
-    // }
+      $oStmt = $this->Db->prepare('UPDATE Post SET photo = :photo WHERE id = :id');
+      move_uploaded_file($tmp_name,"assets/img/".$i['photo']);
+      return $oStmt->execute($i);
+    }
 }

@@ -24,7 +24,7 @@
         <div class="col-md-10 col-lg-8 col-xl-7">
             <p>Créez votre nouvel article</p>
             <div class="my-5">
-                <form id="addPost" data-sb-form-api-token="API_TOKEN">
+                <form id="addPost" data-sb-form-api-token="API_TOKEN" method="POST">
                     <div class="form-floating">
                         <input class="form-control" id="title" type="text" placeholder="Enter post title..." data-sb-validations="required" />
                         <label for="title">Titre</label>
@@ -36,13 +36,23 @@
                         <div class="invalid-feedback" data-sb-feedback="excerpt:required">Châpo du article est obligatoire</div>
                     </div>
                     <div class="form-floating">
+                        <select class="form-select" id="category">
+                            <option value="" disabled selected>Choissiez un catégorie</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <label for="category">Catégorie</label>
+                        <div class="invalid-feedback" data-sb-feedback="excerpt:required">Châpo du article est obligatoire</div>
+                    </div>
+                    <div class="form-floating">
                         <textarea class="form-control" id="content" placeholder="Enter post content here..." style="height: 15rem" data-sb-validations="required"></textarea>
                         <label for="content">Contenu</label>
                         <div class="invalid-feedback" data-sb-feedback="content:required">Contenu du article est obligatoire.</div>
                     </div>
                     <div class="form-floating">
-                        <input class="form-control" id="photo" type="text" placeholder="Enter post photo..." data-sb-validations="required" />
-                        <label for="photo">Image</label>
+                        <input class="form-control" id="photo" type="file" data-sb-validations="required" />
+                        <label for="photo">Photo</label>
                         <div class="invalid-feedback" data-sb-feedback="photo:required">Image d'en-tête du article est obligatoire</div>
                     </div>
                     <br />
@@ -57,7 +67,7 @@
                     <!-- an error submitting the form-->
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error d'enregistrer votre article!</div></div>
                     <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-dark text-uppercase disabled" id="submitAddButton" type="submit">Enregistrer</button></div>
+                    <div class="text-center"><button class="btn btn-dark text-uppercase" id="submitAddButton" type="submit">Enregistrer</button></div>
                 </form>
             </div>
 
