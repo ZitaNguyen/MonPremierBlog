@@ -39,4 +39,14 @@ class AdminModel
       move_uploaded_file($tmp_name,"assets/img/".$i['photo']);
       return $oStmt->execute($i);
     }
+
+    public function getCategories()
+    {
+        $sql = $this->Db->prepare(
+            "SELECT c.id, c.name
+            FROM Category c"
+        );
+        $sql->execute();
+        return $sql->fetchAll(\PDO::FETCH_OBJ);
+    }
 }

@@ -41,6 +41,7 @@ class AdminController extends AbstractController
                 throw new \Exception('Tous les champs doivent être remplis.');
         }
 
-        $this->twig->display('add-post.html.twig');
+        $categories = $adminModel->getCategories();
+        $this->twig->display('add-post.html.twig', ['categories' => $categories]);
     }
 }
