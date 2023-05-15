@@ -1,26 +1,16 @@
 <?php
 
-namespace App\Controllers\HomeController;
+namespace App\Controllers;
 
-require_once('src/Library/Database.php');
-require_once('src/Models/PostModel.php');
+use App\Controllers\AbstractController;
+use App\Models\PostModel;
 
-use App\Library\Database\DatabaseConnection;
-use App\Model\PostModel\PostModel;
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
-
-class HomeController
+class HomeController extends AbstractController
 {
     public function displayHomePage()
     {
-        $loader = new FilesystemLoader('templates');
-        $twig = new Environment($loader);
-        $connection = new DatabaseConnection;
-        $postModel  = new PostModel();
-
-        $postModel->connection = $connection;
+        $postModel  = new PostModel;
         $post = $postModel->getLastPost();
-        echo $twig->render('home.html.twig', ['post' => $post]);
+        $this->twig->display('home.html.twig', ['post' => $post]);
     }
 }
