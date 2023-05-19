@@ -24,25 +24,35 @@
         <div class="col-md-10 col-lg-8 col-xl-7">
             <p>Créez votre nouvel article</p>
             <div class="my-5">
-                <form id="addPost" data-sb-form-api-token="API_TOKEN">
+                <form id="addPost" data-sb-form-api-token="API_TOKEN" method="POST" enctype="multipart/form-data">
                     <div class="form-floating">
-                        <input class="form-control" id="title" type="text" placeholder="Enter post title..." data-sb-validations="required" />
+                        <input class="form-control" id="title" name="title" type="text" placeholder="Enter post title..." data-sb-validations="required" />
                         <label for="title">Titre</label>
                         <div class="invalid-feedback" data-sb-feedback="title:required">Titre du article est obligatoire</div>
                     </div>
                     <div class="form-floating">
-                        <input class="form-control" id="excerpt" type="text" placeholder="Enter post excerpt..." data-sb-validations="required" />
+                        <input class="form-control" id="excerpt" name="excerpt" type="text" placeholder="Enter post excerpt..." data-sb-validations="required" />
                         <label for="excerpt">Chapô</label>
                         <div class="invalid-feedback" data-sb-feedback="excerpt:required">Châpo du article est obligatoire</div>
                     </div>
                     <div class="form-floating">
-                        <textarea class="form-control" id="content" placeholder="Enter post content here..." style="height: 15rem" data-sb-validations="required"></textarea>
+                        <select class="form-select" id="category" name="category">
+                            <option value="" disabled selected>Choissiez un catégorie</option>
+                            {% for category in categories %}
+                            <option value="{{category.id}}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="category">Catégorie</label>
+                        <div class="invalid-feedback" data-sb-feedback="excerpt:required">Châpo du article est obligatoire</div>
+                    </div>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="content" name="content" placeholder="Enter post content here..." style="height: 15rem" data-sb-validations="required"></textarea>
                         <label for="content">Contenu</label>
                         <div class="invalid-feedback" data-sb-feedback="content:required">Contenu du article est obligatoire.</div>
                     </div>
                     <div class="form-floating">
-                        <input class="form-control" id="photo" type="text" placeholder="Enter post photo..." data-sb-validations="required" />
-                        <label for="photo">Image</label>
+                        <input class="form-control" id="photo" name="photo" type="file" data-sb-validations="required" />
+                        <label for="photo">Photo</label>
                         <div class="invalid-feedback" data-sb-feedback="photo:required">Image d'en-tête du article est obligatoire</div>
                     </div>
                     <br />
@@ -57,7 +67,7 @@
                     <!-- an error submitting the form-->
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error d'enregistrer votre article!</div></div>
                     <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-dark text-uppercase disabled" id="submitAddButton" type="submit">Enregistrer</button></div>
+                    <div class="text-center"><button class="btn btn-dark text-uppercase" name="submitAddButton" type="submit">Enregistrer</button></div>
                 </form>
             </div>
 

@@ -30,7 +30,7 @@ class PostModel
     public function getPost($id)
     {
         $sql = $this->Db->prepare(
-            "SELECT p.id, p.title, p.excerpt, p.content, DATE_FORMAT(p.modify_date, '%d/%m/%Y') AS modifyDate, ps.name
+            "SELECT p.id, p.title, p.excerpt, p.content, p.photo, DATE_FORMAT(p.modify_date, '%d/%m/%Y') AS modifyDate, ps.name
             FROM Post p
             INNER JOIN Person ps
             WHERE p.author_id = ps.id
