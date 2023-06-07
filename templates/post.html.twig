@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-<!-- Page Header-->
+<!-- Page Header -->
 <header class="masthead" style="background-image: url('assets/img/{{ post.photo }}')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -24,7 +24,7 @@
     </div>
 </header>
 
-<!-- Post Content-->
+<!-- Post Content -->
 <article class="mb-4">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -34,4 +34,11 @@
         </div>
     </div>
 </article>
+
+<!-- Buttons -->
+<div class="d-grid gap-2 d-flex justify-content-end me-4">
+    <a class="btn btn-dark btn-lg me-2" href="/modify-post-{{ post.id }}" role="button" title="Modifier"><i class="fa-solid fa-pencil"></i></a>
+    <a class="btn btn-dark btn-lg" href="/delete-post-{{ post.id }}" role="button" title="Supprimer"><i class="fa-solid fa-trash-can"></i></a>
+</div>
+
 {% endblock %}
