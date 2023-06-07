@@ -95,6 +95,7 @@ class AdminController extends AbstractController
                 }
 
                 $aData = [
+                    'id' => $id,
                     'title' => $_POST['title'],
                     'excerpt' => $_POST['excerpt'],
                     'content' => $_POST['content'],
