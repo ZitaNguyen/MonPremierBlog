@@ -45,7 +45,6 @@ class AdminController extends AbstractController
                     'author_id' => '1',
                     'category_id' => $_POST['category'],
                     'photo' => $fileName
-                    // 'created_date' => date('Y-m-d H:i:s')
                 ];
 
                 $success = $adminModel->addPost($aData);
