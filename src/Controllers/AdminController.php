@@ -16,7 +16,8 @@ class AdminController extends AbstractController
         {
             if (!empty($_POST['title']) && !empty($_POST['excerpt']) && !empty($_POST['content']) && !empty($_POST['category']))
             {
-                if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0) {
+                if (isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0)
+                {
                     $file = $_FILES["photo"];
 
                     // Specify the directory to which you want to save the uploaded image
@@ -43,7 +44,7 @@ class AdminController extends AbstractController
                     'title' => $_POST['title'],
                     'excerpt' => $_POST['excerpt'],
                     'content' => $_POST['content'],
-                    'author_id' => '1',
+                    'author_id' => 1,
                     'category_id' => $_POST['category'],
                     'photo' => $fileName
                 ];
@@ -52,7 +53,7 @@ class AdminController extends AbstractController
                 if (!$success)
                     throw new \Exception('Impossible d\'ajouter votre article');
                 else
-                    header('Location: blog');
+                    header('Location: /blog');
             }
             else
                 throw new \Exception('Tous les champs doivent être remplis.');
@@ -98,7 +99,7 @@ class AdminController extends AbstractController
                     'title' => $_POST['title'],
                     'excerpt' => $_POST['excerpt'],
                     'content' => $_POST['content'],
-                    'author_id' => '1',
+                    'author_id' => 1,
                     'category_id' => $_POST['category'],
                     'photo' => $fileName
                 ];
@@ -107,7 +108,7 @@ class AdminController extends AbstractController
                 if (!$success)
                     throw new \Exception('Impossible de modifier votre article');
                 else
-                    header('Location: blog'); // how to return to the current post???
+                    header('Location: /blog'); // how to return to the current post???
             }
             else
                 throw new \Exception('Tous les champs doivent être remplis.');

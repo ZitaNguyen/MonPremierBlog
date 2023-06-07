@@ -4,6 +4,7 @@ include 'vendor/autoload.php';
 use App\Controllers\HomeController;
 use App\Controllers\PostController;
 use App\Controllers\AdminController;
+use App\Controllers\UserController;
 
 define('ROOT_PATH', __DIR__ . '/src/');
 
@@ -18,6 +19,15 @@ switch ($uri) {
         break;
     case '/add-post':
         (new AdminController())->addPost();
+        break;
+    case '/login':
+        (new UserController())->login();
+        break;
+    case '/create-account':
+        (new UserController())->createAccount();
+        break;
+    case '/logout':
+        (new UserController())->logout();
         break;
     default:
         preg_match('/[0-9]+/', $uri, $matches);
