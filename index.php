@@ -22,7 +22,10 @@ switch ($uri) {
     default:
         preg_match('/[0-9]+/', $uri, $matches);
         $id = $matches[0];
-        (new PostController())->getPost($id);
+        if(strpos($uri, 'modify-post') !== false)
+            (new AdminController())->modifyPost($id);
+        else
+            (new PostController())->getPost($id);
         break;
 }
 

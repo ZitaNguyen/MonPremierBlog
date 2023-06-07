@@ -37,8 +37,8 @@
 
 <!-- Buttons -->
 <div class="d-grid gap-2 d-flex justify-content-end me-4">
-    <a class="btn btn-dark btn-lg me-2" href="/modify-post" role="button" title="Modifier"><i class="fa-solid fa-pencil"></i></a>
-    <a class="btn btn-dark btn-lg" href="/delete-post" role="button" title="Supprimer"><i class="fa-solid fa-trash-can"></i></a>
+    <a class="btn btn-dark btn-lg me-2" href="/modify-post-{{ post.id }}" role="button" title="Modifier"><i class="fa-solid fa-pencil"></i></a>
+    <a class="btn btn-dark btn-lg" href="/delete-post-{{ post.id }}" role="button" title="Supprimer"><i class="fa-solid fa-trash-can"></i></a>
 </div>
 
 {% endblock %}
