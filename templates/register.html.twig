@@ -24,7 +24,7 @@
         <div class="col-md-10 col-lg-8 col-xl-7">
             <p>Commencez à créer votre compte afin d'avoir des droits d'utilisateur</p>
             <div class="my-5">
-                <form id="createAccount" data-sb-form-api-token="API_TOKEN" method="POST">
+                <form id="register" data-sb-form-api-token="API_TOKEN" method="POST">
                     <div class="form-floating">
                         <input class="form-control" id="username" name="username" type="text" placeholder="Enter your username..." data-sb-validations="required" />
                         <label for="username">Nom d'utilisateur</label>
@@ -46,8 +46,8 @@
                         <div class="invalid-feedback" data-sb-feedback="confirmation:required">Votre confirmation de mot de passe est obligatoire</div>
                     </div>
                     <div class="form-floating">
-                        <input class="form-control" id="photo" name="photo" type="file" />
-                        <label for="photo">Photo</label>
+                        <input class="form-control" id="image" name="image" type="file" />
+                        <label for="image">Photo</label>
                     </div>
                     <br />
                     <!-- Submit success message-->
@@ -61,7 +61,7 @@
                     <!-- an error submitting the form-->
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error de créer votre compte!</div></div>
                     <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-dark text-uppercase" name="submitCreateButton" type="submit">Enregistrer</button></div>
+                    <div class="text-center"><button class="btn btn-dark text-uppercase" name="submitRegisterButton" type="submit">Enregistrer</button></div>
                 </form>
             </div>
 

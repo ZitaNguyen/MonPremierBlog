@@ -23,8 +23,8 @@ switch ($uri) {
     case '/login':
         (new UserController())->login();
         break;
-    case '/create-account':
-        (new UserController())->createAccount();
+    case '/register':
+        (new UserController())->register();
         break;
     case '/logout':
         (new UserController())->logout();

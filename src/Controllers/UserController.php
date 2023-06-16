@@ -8,19 +8,19 @@ use App\Models\UserModel;
 class UserController extends AbstractController
 {
 
-    public function createAccount()
+    public function register()
     {
         $userModel  = new UserModel();
 
-        if (isset($_POST['submitCreateButton']))
+        if (isset($_POST['submitRegisterButton']))
         {
             if (!empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['confirmation']))
             {
                 // Check email account exists
-                $emailExist = $userModel->checkEmail($_POST['email']);
-                if ($emailExist) {
+                $user = $userModel->getUser($_POST['email']);
+                if ($user) {
                     throw new \Exception('Email est déjà pris');
-                    // header('Location: /create-account');
+                    header('Location: /create-account');
                 }
 
                 // Check password confirmation
@@ -30,9 +30,9 @@ class UserController extends AbstractController
                     header('Location: /create-account');
                 }
 
-                if (isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0)
+                if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0)
                 {
-                    $file = $_FILES["photo"];
+                    $file = $_FILES["image"];
 
                     // Specify the directory to which you want to save the uploaded image
                     $targetDir = "assets/img/";
@@ -57,22 +57,22 @@ class UserController extends AbstractController
                 $aData = [
                     'name' => $_POST['username'],
                     'email' => $_POST['email'],
-                    'password' => $_POST['password'],
-                    'photo' => $fileName ?? '',
+                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                    'image' => $fileName ?? '',
                     'role_id' => 2
                 ];
 
-                $success = $userModel->createAccount($aData);
+                $success = $userModel->register($aData);
                 if (!$success)
                     throw new \Exception('Impossible de créer votre compte');
                 else
-                    header('Location: /');
+                    header('Location: /login');
             }
             else
                 throw new \Exception('Tous les champs doivent être remplis.');
         }
 
-        $this->twig->display('create-account.html.twig');
+        $this->twig->display('register.html.twig');
     }
 
     public function login()
@@ -81,18 +81,25 @@ class UserController extends AbstractController
 
         if (isset($_POST['submitLoginButton']))
         {
-            if (!empty($_POST['username']) && !empty($_POST['password']))
+            if (!empty($_POST['email']) && !empty($_POST['password']))
             {
-                $aData = [
-                    'username' => $_POST['username'],
-                    'password' => $_POST['password']
-                ];
+                // Get account by email
+                $user = $userModel->getUser($_POST['email']);
+                if (!$user) {
+                    throw new \Exception('Email non existe');
+                    // header('Location: /create-account');
+                }
 
-                $success = $userModel->login($aData);
-                if (!$success)
-                    throw new \Exception('Impossible d\'accéder à votre compte');
-                else
+                // Check password
+                $hash = $user['password'];
+                if (!password_verify($_POST['password'], $hash))
+                    throw new \Exception('Mot de passe incorrect');
+                else {
+                    session_start();
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_name'] = $user['name'];
                     header('Location: /');
+                }
             }
             else
                 throw new \Exception('Tous les champs doivent être remplis.');
