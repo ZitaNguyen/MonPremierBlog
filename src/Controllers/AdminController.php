@@ -16,9 +16,9 @@ class AdminController extends AbstractController
         {
             if (!empty($_POST['title']) && !empty($_POST['excerpt']) && !empty($_POST['content']) && !empty($_POST['category']))
             {
-                if (isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0)
+                if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0)
                 {
-                    $file = $_FILES["photo"];
+                    $file = $_FILES["image"];
 
                     // Specify the directory to which you want to save the uploaded image
                     $targetDir = "assets/img/";
@@ -46,7 +46,7 @@ class AdminController extends AbstractController
                     'content' => $_POST['content'],
                     'author_id' => 1,
                     'category_id' => $_POST['category'],
-                    'photo' => $fileName
+                    'image' => $fileName
                 ];
 
                 $success = $adminModel->addPost($aData);
@@ -72,8 +72,8 @@ class AdminController extends AbstractController
         {
             if (!empty($_POST['title']) && !empty($_POST['excerpt']) && !empty($_POST['content']) && !empty($_POST['category']))
             {
-                if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0) {
-                    $file = $_FILES["photo"];
+                if(isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+                    $file = $_FILES["image"];
 
                     // Specify the directory to which you want to save the uploaded image
                     $targetDir = "assets/img/";
@@ -92,7 +92,7 @@ class AdminController extends AbstractController
 
                     // Move the uploaded file to the target location
                     if(!move_uploaded_file($file["tmp_name"], $targetFilePath))
-                        throw new \Exception('Impossible de télécharger la photo');
+                        throw new \Exception('Impossible de télécharger la image');
                 }
 
                 $aData = [
@@ -101,7 +101,7 @@ class AdminController extends AbstractController
                     'content' => $_POST['content'],
                     'author_id' => 1,
                     'category_id' => $_POST['category'],
-                    'photo' => $fileName
+                    'image' => $fileName
                 ];
 
                 $success = $adminModel->modifyPost($aData);
