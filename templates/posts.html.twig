@@ -23,8 +23,9 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
         <!-- Button add post -->
+        {% if session.role == 'admin' %}
         <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="/add-post">Ajouter un article</a></div>
-
+        {% endif %}
         <!-- List of posts -->
             {% for post in posts %}
             <!-- Post preview-->
@@ -43,9 +44,11 @@
             <hr class="my-4" />
             {% endfor %}
 
-            <!-- Pager-->
+            <!-- Button add post -->
             <div class="d-flex justify-content-between mb-4">
+            {% if session.role == 'admin' %}
                 <a class="btn btn-primary text-uppercase" href="/add-post">Ajouter un article</a>
+            {% endif %}
                 <a class="btn btn-primary text-uppercase" href="#!">Suivant →</a>
             </div>
         </div>
