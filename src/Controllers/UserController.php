@@ -109,8 +109,8 @@ class UserController extends AbstractController
 
     public function logout()
     {
-        // Handle logout logic here
-        // Destroy session variables and redirect to the login page
+        unset($_SESSION['user_id']);
+        unset($_SESSION['username']);
 
         header("Location: /");
     }
