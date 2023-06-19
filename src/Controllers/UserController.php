@@ -95,9 +95,8 @@ class UserController extends AbstractController
                 if (!password_verify($_POST['password'], $hash))
                     throw new \Exception('Mot de passe incorrect');
                 else {
-                    session_start();
                     $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['user_name'] = $user['name'];
+                    $_SESSION['username'] = $user['name'];
                     header('Location: /');
                 }
             }

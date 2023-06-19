@@ -26,12 +26,12 @@
             <div class="my-5">
                 <form id="login" data-sb-form-api-token="API_TOKEN" method="POST">
                     <div class="form-floating">
-                        <input class="form-control" id="email" name="email" type="text" placeholder="Enter your email..." data-sb-validations="required" />
+                        <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email..." data-sb-validations="required" required/>
                         <label for="email">Email d'utilisateur</label>
                         <div class="invalid-feedback" data-sb-feedback="email:required">Votre email d'utilisateur est obligatoire</div>
                     </div>
                     <div class="form-floating">
-                        <input class="form-control" id="password" name="password" type="password" placeholder="Enter your password..." data-sb-validations="required" />
+                        <input class="form-control" id="password" name="password" type="password" placeholder="Enter your password..." data-sb-validations="required" required/>
                         <label for="password">Mot de passe</label>
                         <div class="invalid-feedback" data-sb-feedback="password:required">Votre mot de passe est obligatoire</div>
                     </div>

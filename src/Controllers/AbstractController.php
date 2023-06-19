@@ -13,5 +13,6 @@ class AbstractController
     {
         $loader = new FilesystemLoader('templates');
         $this->twig = new Environment($loader);
+        $this->twig->addGlobal('session', $_SESSION);
     }
 }
