@@ -26,8 +26,11 @@ class AdminController extends AbstractController
                     // Check extension format
                     $extensions = ['.png','.jpg','.jpeg','.gif','.PNG','.JPG','.JPEG','.GIF'];
                     $extension = strrchr($file["name"], '.');
-                    if (!in_array($extension,$extensions))
-                        throw new \Exception ("Cette image n'est pas valable");
+                    if (!in_array($extension,$extensions)) {
+                        $_SESSION['message'] = 'Cette image n\'est pas valable.';
+                        $_SESSION['error_level'] = 'warning';
+                        header('Location: /add-post');
+                    }
 
                     // Generate a unique name for the image to avoid conflicts
                     $fileName = uniqid() . "_" . $file["name"];
@@ -36,27 +39,36 @@ class AdminController extends AbstractController
                     $targetFilePath = $targetDir . $fileName;
 
                     // Move the uploaded file to the target location
-                    if(!move_uploaded_file($file["tmp_name"], $targetFilePath))
-                        throw new \Exception('Impossible de télécharger la photo');
+                    if(!move_uploaded_file($file["tmp_name"], $targetFilePath)) {
+                        $_SESSION['message'] = 'Impossible de télécharger la photo.';
+                        $_SESSION['error_level'] = 'warning';
+                        header('Location: /add-post');
+                    }
                 }
 
                 $aData = [
                     'title' => $_POST['title'],
                     'excerpt' => $_POST['excerpt'],
                     'content' => $_POST['content'],
-                    'author_id' => 1,
+                    'person_id' => 1,
                     'category_id' => $_POST['category'],
                     'image' => $fileName
                 ];
 
                 $success = $adminModel->addPost($aData);
-                if (!$success)
-                    throw new \Exception('Impossible d\'ajouter votre article');
+                if (!$success) {
+                    $_SESSION['message'] = 'Impossible d\'ajouter votre article.';
+                    $_SESSION['error_level'] = 'danger';
+                    header('Location: /add-post');
+                }
                 else
                     header('Location: /blog');
             }
-            else
-                throw new \Exception('Tous les champs doivent être remplis.');
+            else {
+                $_SESSION['message'] = 'Tous les champs doivent être remplis.';
+                $_SESSION['error_level'] = 'info';
+                header('Location: /add-post');
+            }
         }
 
         $categories = $adminModel->getCategories();
@@ -72,7 +84,8 @@ class AdminController extends AbstractController
         {
             if (!empty($_POST['title']) && !empty($_POST['excerpt']) && !empty($_POST['content']) && !empty($_POST['category']))
             {
-                if(isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+                if(isset($_FILES["image"]) && $_FILES["image"]["error"] == 0)
+                {
                     $file = $_FILES["image"];
 
                     // Specify the directory to which you want to save the uploaded image
@@ -81,8 +94,11 @@ class AdminController extends AbstractController
                     // Check extension format
                     $extensions = ['.png','.jpg','.jpeg','.gif','.PNG','.JPG','.JPEG','.GIF'];
                     $extension = strrchr($file["name"], '.');
-                    if (!in_array($extension,$extensions))
-                        throw new \Exception ("Cette image n'est pas valable");
+                    if (!in_array($extension,$extensions)) {
+                        $_SESSION['message'] = 'Cette photo n\'est pas valable.';
+                        $_SESSION['error_level'] = 'warning';
+                        header("Location: /modify-post-$id");
+                    }
 
                     // Generate a unique name for the image to avoid conflicts
                     $fileName = uniqid() . "_" . $file["name"];
@@ -91,8 +107,16 @@ class AdminController extends AbstractController
                     $targetFilePath = $targetDir . $fileName;
 
                     // Move the uploaded file to the target location
-                    if(!move_uploaded_file($file["tmp_name"], $targetFilePath))
-                        throw new \Exception('Impossible de télécharger la image');
+                    if(!move_uploaded_file($file["tmp_name"], $targetFilePath)) {
+                        $_SESSION['message'] = 'Impossible de télécharger la photo.';
+                        $_SESSION['error_level'] = 'danger';
+                        header("Location: /modify-post-$id");
+                    }
+                }
+                else {
+                    $_SESSION['message'] = 'Le champ photo est obligatoire.';
+                    $_SESSION['error_level'] = 'danger';
+                    header("Location: /modify-post-$id");
                 }
 
                 $aData = [
@@ -100,19 +124,25 @@ class AdminController extends AbstractController
                     'title' => $_POST['title'],
                     'excerpt' => $_POST['excerpt'],
                     'content' => $_POST['content'],
-                    'author_id' => 1,
+                    'person_id' => 1,
                     'category_id' => $_POST['category'],
                     'image' => $fileName
                 ];
 
                 $success = $adminModel->modifyPost($aData);
-                if (!$success)
-                    throw new \Exception('Impossible de modifier votre article');
+                if (!$success) {
+                    $_SESSION['message'] = 'Impossible de modifier votre article.';
+                    $_SESSION['error_level'] = 'danger';
+                    header("Location: /modify-post-$id");
+                }
                 else
-                    header('Location: /blog'); // how to return to the current post???
+                    header("Location: /post-$id");
             }
-            else
-                throw new \Exception('Tous les champs doivent être remplis.');
+            else {
+                $_SESSION['message'] = 'Tous les champs doivent être remplis.';
+                $_SESSION['error_level'] = 'danger';
+                header("Location: /modify-post-$id");
+            }
         }
 
         $categories = $adminModel->getCategories();

@@ -22,6 +22,13 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
+            {% if session.message is defined %}
+            <div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
+                {{ session.message }}
+                {# <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> #}
+                <a class="btn-close" data-bs-dismiss="alert" aria-label="Close" href="/unset" role="button"></a>
+            </div>
+            {% endif %}
             <p>Commencez à créer votre compte afin d'avoir des droits d'utilisateur</p>
             <div class="my-5">
                 <form id="register" data-sb-form-api-token="API_TOKEN" method="POST">

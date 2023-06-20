@@ -19,15 +19,17 @@ class UserController extends AbstractController
                 // Check email account exists
                 $user = $userModel->getUser($_POST['email']);
                 if ($user) {
-                    throw new \Exception('Email est déjà pris');
-                    header('Location: /create-account');
+                    $_SESSION['message'] = 'Email est déjà enregistré.';
+                    $_SESSION['error_level'] = 'info';
+                    header('Location: /login');
                 }
 
                 // Check password confirmation
                 if ($_POST['password'] != $_POST['confirmation'])
                 {
-                    throw new \Exception('La confirmation ne correspond pas à votre mot de passe');
-                    header('Location: /create-account');
+                    $_SESSION['message'] = 'La confirmation ne correspond pas à votre mot de passe.';
+                    $_SESSION['error_level'] = 'warning';
+                    header('Location: /register');
                 }
 
                 if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0)
@@ -40,8 +42,11 @@ class UserController extends AbstractController
                     // Check extension format
                     $extensions = ['.png','.jpg','.jpeg','.gif','.PNG','.JPG','.JPEG','.GIF'];
                     $extension = strrchr($file["name"], '.');
-                    if (!in_array($extension,$extensions))
-                        throw new \Exception ("Cette image n'est pas valable");
+                    if (!in_array($extension,$extensions)) {
+                        $_SESSION['message'] = 'Cette image n\'est pas valable.';
+                        $_SESSION['error_level'] = 'warning';
+                        header('Location: /register');
+                    }
 
                     // Generate a unique name for the image to avoid conflicts
                     $fileName = uniqid() . "_" . $file["name"];
@@ -50,8 +55,11 @@ class UserController extends AbstractController
                     $targetFilePath = $targetDir . $fileName;
 
                     // Move the uploaded file to the target location
-                    if(!move_uploaded_file($file["tmp_name"], $targetFilePath))
-                        throw new \Exception('Impossible de télécharger la photo');
+                    if(!move_uploaded_file($file["tmp_name"], $targetFilePath)) {
+                        $_SESSION['message'] = 'Impossible de télécharger la photo.';
+                        $_SESSION['error_level'] = 'danger';
+                        header('Location: /register');
+                    }
                 }
 
                 $aData = [
@@ -63,13 +71,19 @@ class UserController extends AbstractController
                 ];
 
                 $success = $userModel->register($aData);
-                if (!$success)
-                    throw new \Exception('Impossible de créer votre compte');
+                if (!$success) {
+                    $_SESSION['message'] = 'Impossible de créer votre compte.';
+                    $_SESSION['error_level'] = 'danger';
+                    header('Location: /register');
+                }
                 else
                     header('Location: /login');
             }
-            else
-                throw new \Exception('Tous les champs doivent être remplis.');
+            else {
+                $_SESSION['message'] = 'Tous les champs doivent être remplis.';
+                $_SESSION['error_level'] = 'danger';
+                header('Location: /register');
+            }
         }
 
         $this->twig->display('register.html.twig');
@@ -86,14 +100,17 @@ class UserController extends AbstractController
                 // Get account by email
                 $user = $userModel->getUser($_POST['email']);
                 if (!$user) {
-                    throw new \Exception('Email non existe');
-                    // header('Location: /create-account');
+                    $_SESSION['message'] = 'Email non existe. Veuillez créer votre compte.';
+                    $_SESSION['error_level'] = 'danger';
+                    header('Location: /register');
                 }
 
                 // Check password
                 $hash = $user['password'];
-                if (!password_verify($_POST['password'], $hash))
-                    throw new \Exception('Mot de passe incorrect');
+                if (!password_verify($_POST['password'], $hash)) {
+                    $_SESSION['message'] = 'Mot de passe incorrect';
+                    $_SESSION['error_level'] = 'danger';
+                }
                 else {
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['name'];
@@ -101,8 +118,10 @@ class UserController extends AbstractController
                     header('Location: /');
                 }
             }
-            else
-                throw new \Exception('Tous les champs doivent être remplis.');
+            else {
+                $_SESSION['message'] = 'Tous les champs doivent être remplis.';
+                $_SESSION['error_level'] = 'warning';
+            }
         }
 
         $this->twig->display('login.html.twig');
@@ -112,6 +131,7 @@ class UserController extends AbstractController
     {
         unset($_SESSION['user_id']);
         unset($_SESSION['username']);
+        unset($_SESSION['role']);
 
         header("Location: /");
     }

@@ -15,4 +15,10 @@ class AbstractController
         $this->twig = new Environment($loader);
         $this->twig->addGlobal('session', $_SESSION);
     }
+
+    public function unsetSession()
+    {
+        unset($_SESSION['message']);
+        unset($_SESSION['error_level']);
+    }
 }
