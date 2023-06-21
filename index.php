@@ -1,6 +1,9 @@
 <?php
+session_start();
+
 include 'vendor/autoload.php';
 
+use App\Controllers\AbstractController;
 use App\Controllers\HomeController;
 use App\Controllers\PostController;
 use App\Controllers\AdminController;
@@ -28,6 +31,9 @@ switch ($uri) {
         break;
     case '/logout':
         (new UserController())->logout();
+        break;
+    case '/unset':
+        (new AbstractController())->unsetSession();
         break;
     default:
         preg_match('/[0-9]+/', $uri, $matches);

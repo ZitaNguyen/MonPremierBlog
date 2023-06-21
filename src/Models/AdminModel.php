@@ -23,7 +23,7 @@ class AdminModel
         $sql->bindValue(':title', $aData['title'], \PDO::PARAM_STR);
         $sql->bindValue(':excerpt', $aData['excerpt'], \PDO::PARAM_STR);
         $sql->bindValue(':content', $aData['content'], \PDO::PARAM_LOB);
-        $sql->bindValue(':author_id', $aData['author_id'], \PDO::PARAM_INT);
+        $sql->bindValue(':person_id', $aData['person_id'], \PDO::PARAM_INT);
         $sql->bindValue(':category_id', $aData['category_id'], \PDO::PARAM_INT);
         $sql->bindValue(':image', $aData['image'], \PDO::PARAM_STR);
         return $sql->execute();
@@ -39,7 +39,7 @@ class AdminModel
         $sql->bindValue(':title', $aData['title'], \PDO::PARAM_STR);
         $sql->bindValue(':excerpt', $aData['excerpt'], \PDO::PARAM_STR);
         $sql->bindValue(':content', $aData['content'], \PDO::PARAM_LOB);
-        $sql->bindValue(':author_id', $aData['author_id'], \PDO::PARAM_INT);
+        $sql->bindValue(':person_id', $aData['person_id'], \PDO::PARAM_INT);
         $sql->bindValue(':category_id', $aData['category_id'], \PDO::PARAM_INT);
         $sql->bindValue(':image', $aData['image'], \PDO::PARAM_STR);
         $sql->bindValue(':id', $aData['id'], \PDO::PARAM_INT);
