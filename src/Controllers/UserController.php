@@ -76,8 +76,11 @@ class UserController extends AbstractController
                     $_SESSION['error_level'] = 'danger';
                     header('Location: /register');
                 }
-                else
+                else {
+                    $_SESSION['message'] = 'Vous avez réussi à créer votre compte. Veuillez connecter.';
+                    $_SESSION['error_level'] = 'success';
                     header('Location: /login');
+                }
             }
             else {
                 $_SESSION['message'] = 'Tous les champs doivent être remplis.';
