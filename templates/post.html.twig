@@ -30,10 +30,44 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <p>{{ post.content}}</p>
+                <hr class="mt-5">
+                <p class="fw-bold fst-italic">Commentaires</p>
+                {% if comments is not empty %}
+                    {% for comment in comments %}
+                        <p>- <span class="fw-bold">{{ comment.name}} écrit</span>: {{ comment.comment}}</p>
+                    {% endfor %}
+                {% else %}
+                <p class="text-muted fs-6 fst-italic">0 commentaire</p>
+                {% endif %}
+                <!-- Comment -->
+                {% if session.user_id is defined %}
+                <div>
+                    <form id="addComment" data-sb-form-api-token="API_TOKEN" method="POST">
+                        <div>
+                            <textarea class="form-control border" id="comment" name="comment" placeholder="Ajouter votre commentaire..." style="height: 15rem" data-sb-validations="required" required></textarea>
+                            <div class="invalid-feedback" data-sb-feedback="comment:required">Commentaire est obligatoire.</div>
+                        </div>
+                        <br />
+                        <!-- Submit success message-->
+                        <!---->
+                        <!-- This is what your users will see when the form-->
+                        <!-- has successfully submitted-->
+                        <div class="d-none" id="submitSuccessMessage"><div class="text-center mb-3">Votre commentaire est postulé!</div></div>
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error d'postuler votre commentaire!</div></div>
+                        <!-- Submit Button-->
+                        <div class="text-center"><button class="btn btn-dark text-uppercase" name="submitAddCommentButton" type="submit">Postuler</button></div>
+                    </form>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
 </article>
+
 
 <!-- Buttons to modify and delete post -->
 {% if session.role == 'admin' %}
