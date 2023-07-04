@@ -30,10 +30,50 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <p>{{ post.content}}</p>
+                <hr class="mt-5">
+                <p class="fw-bold fst-italic">Commentaires</p>
+                {% if comments is not empty %}
+                    {% for comment in comments %}
+                        <div class="card mb-3">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {% if comment.image is empty %}
+                                    <img src="/assets/img/default_profile.png" class="img-fluid align-items-center" alt="default_image">
+                                    {% else %}
+                                    <img src="/assets/img/{{ comment.image }}" class="img-fluid" alt="profile_image">
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ comment.name }}</h5>
+                                        <p class="card-text">{{ comment.comment }}</p>
+                                        <p class="card-text"><small class="text-muted">{{ comment.create_date }}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                <p class="text-muted fs-6 fst-italic">0 commentaire</p>
+                {% endif %}
+                <!-- Comment -->
+                {% if session.user_id is defined %}
+                <div>
+                    <form id="addComment" data-sb-form-api-token="API_TOKEN" method="POST">
+                        <div>
+                            <textarea class="form-control border" id="comment" name="comment" placeholder="Ajouter votre commentaire..." style="height: 15rem" data-sb-validations="required" required></textarea>
+                            <div class="invalid-feedback" data-sb-feedback="comment:required">Commentaire est obligatoire.</div>
+                        </div>
+                        <!-- Submit Button-->
+                        <div class="text-center"><button class="btn btn-dark text-uppercase" name="submitAddCommentButton" type="submit">Postuler</button></div>
+                    </form>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
 </article>
+
 
 <!-- Buttons to modify and delete post -->
 {% if session.role == 'admin' %}

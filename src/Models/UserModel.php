@@ -38,4 +38,17 @@ class UserModel
         $sql->execute();
         return $sql->fetch();
     }
+
+    public function addComment($aData)
+    {
+        $sql = $this->Db->prepare(
+            "INSERT INTO Comment (comment, person_id, post_id, validate)
+            VALUES (:comment, :person_id, :post_id, :validate)"
+        );
+        $sql->bindValue(':comment', $aData['comment'], \PDO::PARAM_STR);
+        $sql->bindValue(':person_id', $aData['person_id'], \PDO::PARAM_INT);
+        $sql->bindValue(':post_id', $aData['post_id'], \PDO::PARAM_INT);
+        $sql->bindValue(':validate', $aData['validate'], \PDO::PARAM_INT);
+        return $sql->execute();
+    }
 }
