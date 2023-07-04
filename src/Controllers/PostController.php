@@ -25,7 +25,8 @@ class PostController extends AbstractController
                 $aData = [
                     'comment' => $_POST['comment'],
                     'person_id' => $_SESSION['user_id'],
-                    'post_id' => $id
+                    'post_id' => $id,
+                    'validate' => 0
                 ];
 
                 $success = $userModel->addComment($aData);
@@ -45,6 +46,8 @@ class PostController extends AbstractController
         $postModel  = new PostModel();
         $post = $postModel->getPost($id);
         $comments = $postModel->getComment($id);
+        foreach ($comments as $comment)
+            $comment->create_date = date("d-m-Y", strtotime($comment->create_date));
         $this->twig->display('post.html.twig', ['post' => $post, 'comments' => $comments]);
     }
 }
