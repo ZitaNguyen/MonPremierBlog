@@ -17,6 +17,9 @@ switch ($uri) {
     case '/':
         (new HomeController())->displayHomePage();
         break;
+    case '/admin':
+        (new AdminController())->displayAdminPage();
+        break;
     case '/blog':
         (new PostController())->getPosts();
         break;

@@ -8,6 +8,13 @@ use App\Models\PostModel;
 
 class AdminController extends AbstractController
 {
+    public function displayAdminPage()
+    {
+        $postModel  = new PostModel();
+        $posts = $postModel->getPosts();
+        $this->twig->display('admin.html.twig', ['posts' => $posts]);
+    }
+
     public function addPost()
     {
         $adminModel  = new AdminModel();
