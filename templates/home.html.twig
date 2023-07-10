@@ -63,36 +63,25 @@
                 <!-- To make this form functional, sign up at-->
                 <!-- https://startbootstrap.com/solution/contact-forms-->
                 <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="POST" action="/">
                     <div class="form-floating">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name..." data-sb-validations="required" required/>
                         <label for="name">Votre nom</label>
                         <div class="invalid-feedback" data-sb-feedback="name:required">Votre nom est obligatoire.</div>
                     </div>
                     <div class="form-floating">
-                        <input class="form-control" id="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
+                        <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" required/>
                         <label for="email">Votre email</label>
                         <div class="invalid-feedback" data-sb-feedback="email:required">Votre email est obligatoire.</div>
                         <div class="invalid-feedback" data-sb-feedback="email:email">Email entrée n'est pas valid.</div>
                     </div>
                     <div class="form-floating">
-                        <textarea class="form-control" id="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
+                        <textarea class="form-control" id="message" name="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required" required></textarea>
                         <label for="message">Message</label>
                         <div class="invalid-feedback" data-sb-feedback="message:required">Votre message est obligatoire.</div>
                     </div>
-                    <br />
-                    <!-- Submit success message-->
-                    <!---->
-                    <!-- This is what your users will see when the form-->
-                    <!-- has successfully submitted-->
-                    <div class="d-none" id="submitSuccessMessage"><div class="text-center mb-3">Votre message est envoyé!</div></div>
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
-                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error de l'envoi votre message!</div></div>
                     <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-dark text-uppercase disabled" id="submitButton" type="submit">Envoyer</button></div>
+                    <div class="text-center"><button class="btn btn-dark text-uppercase" name="submitContactFormButton" type="submit">Envoyer</button></div>
                 </form>
             </div>
         </div>
