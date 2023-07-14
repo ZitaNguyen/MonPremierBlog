@@ -50,4 +50,14 @@ class PostController extends AbstractController
             $comment->create_date = date("d-m-Y", strtotime($comment->create_date));
         $this->twig->display('post.html.twig', ['post' => $post, 'comments' => $comments]);
     }
+
+    public function getAdminPost($id)
+    {
+        $postModel  = new PostModel();
+        $post = $postModel->getPost($id);
+        $comments = $postModel->getComment($id);
+        foreach ($comments as $comment)
+            $comment->create_date = date("d-m-Y", strtotime($comment->create_date));
+        $this->twig->display('admin-view-post.html.twig', ['post' => $post, 'comments' => $comments]);
+    }
 }

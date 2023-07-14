@@ -12,7 +12,6 @@ class HomeController extends AbstractController
 {
     public function displayHomePage()
     {
-        var_dump($_POST); die;
         if (isset($_POST['submitContactFormButton']))
         {
             if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['message']))

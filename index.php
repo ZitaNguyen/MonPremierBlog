@@ -17,8 +17,8 @@ switch ($uri) {
     case '/':
         (new HomeController())->displayHomePage();
         break;
-    case '/admin':
-        (new AdminController())->displayAdminPage();
+    case '/admin/posts':
+        (new AdminController())->displayAdminPostsPage();
         break;
     case '/blog':
         (new PostController())->getPosts();
@@ -43,6 +43,8 @@ switch ($uri) {
         $id = $matches[0];
         if(strpos($uri, 'modify-post') !== false)
             (new AdminController())->modifyPost($id);
+        elseif (strpos($uri, 'admin') !== false)
+            (new PostController())->getAdminPost($id);
         else
             (new PostController())->getPost($id);
         break;
