@@ -23,7 +23,7 @@ switch ($uri) {
     case '/blog':
         (new PostController())->getPosts();
         break;
-    case '/add-post':
+    case '/admin/add-post':
         (new AdminController())->addPost();
         break;
     case '/login':

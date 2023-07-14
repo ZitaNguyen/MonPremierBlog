@@ -17,8 +17,8 @@ class AdminModel
     public function addPost($aData)
     {
         $sql = $this->Db->prepare(
-            "INSERT INTO Post (title, excerpt, content, author_id, category_id, image)
-            VALUES (:title, :excerpt, :content, :author_id, :category_id, :image)"
+            "INSERT INTO Post (title, excerpt, content, person_id, category_id, image)
+            VALUES (:title, :excerpt, :content, :person_id, :category_id, :image)"
         );
         $sql->bindValue(':title', $aData['title'], \PDO::PARAM_STR);
         $sql->bindValue(':excerpt', $aData['excerpt'], \PDO::PARAM_STR);
@@ -33,7 +33,7 @@ class AdminModel
     {
         $sql = $this->Db->prepare(
             "UPDATE Post
-            SET title = :title, excerpt = :excerpt, content = :content, author_id = :author_id, category_id = :category_id, image = :image
+            SET title = :title, excerpt = :excerpt, content = :content, person_id = :person_id, category_id = :category_id, image = :image
             WHERE id = :id"
         );
         $sql->bindValue(':title', $aData['title'], \PDO::PARAM_STR);

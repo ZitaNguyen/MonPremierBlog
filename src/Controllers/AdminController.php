@@ -36,7 +36,7 @@ class AdminController extends AbstractController
                     if (!in_array($extension,$extensions)) {
                         $_SESSION['message'] = 'Cette image n\'est pas valable.';
                         $_SESSION['error_level'] = 'warning';
-                        header('Location: /add-post');
+                        header('Location: /admin/add-post');
                     }
 
                     // Generate a unique name for the image to avoid conflicts
@@ -49,7 +49,7 @@ class AdminController extends AbstractController
                     if(!move_uploaded_file($file["tmp_name"], $targetFilePath)) {
                         $_SESSION['message'] = 'Impossible de télécharger la photo.';
                         $_SESSION['error_level'] = 'warning';
-                        header('Location: /add-post');
+                        header('Location: /admin/add-post');
                     }
                 }
 
@@ -66,20 +66,20 @@ class AdminController extends AbstractController
                 if (!$success) {
                     $_SESSION['message'] = 'Impossible d\'ajouter votre article.';
                     $_SESSION['error_level'] = 'danger';
-                    header('Location: /add-post');
+                    header('Location: /admin/add-post');
                 }
                 else
-                    header('Location: /blog');
+                    header('Location: /admin/posts');
             }
             else {
                 $_SESSION['message'] = 'Tous les champs doivent être remplis.';
                 $_SESSION['error_level'] = 'info';
-                header('Location: /add-post');
+                header('Location: /admin/add-post');
             }
         }
 
         $categories = $adminModel->getCategories();
-        $this->twig->display('add-post.html.twig', ['categories' => $categories]);
+        $this->twig->display('admin-add-post.html.twig', ['categories' => $categories]);
     }
 
     public function modifyPost($id)
