@@ -1,0 +1,45 @@
+{% extends "layout-admin.html.twig" %}
+
+{% block title %}
+    Articles
+{% endblock %}
+
+{% block main %}
+    <!-- Content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-3">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for post in posts %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="/assets/img/{{ post.image }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.excerpt }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="row justify-content-between">
+                            <div class="col">
+                                <ul class="list-inline text-center">
+                                    <li class="list-inline-item">
+                                        <a href="/admin/post-{{ post.id }}"><i class="fa-solid fa-eye"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="/admin/modify-post-{{ post.id }}"><i class="fa-solid fa-pencil"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="/admin/delete-post-{{ post.id }}"><i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}
+

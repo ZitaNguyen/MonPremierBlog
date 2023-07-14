@@ -20,9 +20,6 @@ switch ($uri) {
     case '/blog':
         (new PostController())->getPosts();
         break;
-    case '/add-post':
-        (new AdminController())->addPost();
-        break;
     case '/login':
         (new UserController())->login();
         break;
@@ -35,11 +32,24 @@ switch ($uri) {
     case '/unset':
         (new AbstractController())->unsetSession();
         break;
+    case '/admin/posts':
+        (new AdminController())->displayAdminPostsPage();
+        break;
+    case '/admin/add-post':
+        (new AdminController())->addPost();
+        break;
+    case '/admin/users':
+        (new AdminController())->viewUsers();
+        break;
     default:
         preg_match('/[0-9]+/', $uri, $matches);
         $id = $matches[0];
         if(strpos($uri, 'modify-post') !== false)
             (new AdminController())->modifyPost($id);
+        elseif(strpos($uri, 'delete-post') !== false)
+            (new AdminController())->deletePost($id);
+        elseif (strpos($uri, 'admin') !== false)
+            (new PostController())->getAdminPost($id);
         else
             (new PostController())->getPost($id);
         break;
