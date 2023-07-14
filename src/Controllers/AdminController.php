@@ -140,20 +140,20 @@ class AdminController extends AbstractController
                 if (!$success) {
                     $_SESSION['message'] = 'Impossible de modifier votre article.';
                     $_SESSION['error_level'] = 'danger';
-                    header("Location: /modify-post-$id");
+                    header("Location: /admin/modify-post-$id");
                 }
                 else
-                    header("Location: /post-$id");
+                    header("Location: /admin/post-$id");
             }
             else {
                 $_SESSION['message'] = 'Tous les champs doivent être remplis.';
                 $_SESSION['error_level'] = 'danger';
-                header("Location: /modify-post-$id");
+                header("Location: /admin/modify-post-$id");
             }
         }
 
         $categories = $adminModel->getCategories();
         $post = $postModel->getPost($id);
-        $this->twig->display('modify-post.html.twig', ['post' => $post, 'categories' => $categories]);
+        $this->twig->display('admin-modify-post.html.twig', ['post' => $post, 'categories' => $categories]);
     }
 }
