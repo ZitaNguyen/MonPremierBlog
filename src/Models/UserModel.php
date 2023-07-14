@@ -51,4 +51,14 @@ class UserModel
         $sql->bindValue(':validate', $aData['validate'], \PDO::PARAM_INT);
         return $sql->execute();
     }
+
+    public function getUsers()
+    {
+        $sql = $this->Db->prepare(
+            "SELECT p.*, r.role FROM Person p
+            INNER JOIN Role r ON p.role_id = r.id"
+        );
+        $sql->execute();
+        return $sql->fetchAll();
+    }
 }

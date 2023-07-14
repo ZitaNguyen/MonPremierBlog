@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\AbstractController;
 use App\Models\AdminModel;
 use App\Models\PostModel;
+use App\Models\UserModel;
 
 class AdminController extends AbstractController
 {
@@ -163,5 +164,12 @@ class AdminController extends AbstractController
         $adminModel->deletePost($id);
         $_SESSION['message'] = 'L\'article est supprimé';
         header("Location: /admin/posts");
+    }
+
+    public function viewUsers()
+    {
+        $userModel = new UserModel();
+        $users = $userModel->getUsers();
+        $this->twig->display('admin-users.html.twig', ['users' => $users]);
     }
 }

@@ -17,14 +17,8 @@ switch ($uri) {
     case '/':
         (new HomeController())->displayHomePage();
         break;
-    case '/admin/posts':
-        (new AdminController())->displayAdminPostsPage();
-        break;
     case '/blog':
         (new PostController())->getPosts();
-        break;
-    case '/admin/add-post':
-        (new AdminController())->addPost();
         break;
     case '/login':
         (new UserController())->login();
@@ -37,6 +31,15 @@ switch ($uri) {
         break;
     case '/unset':
         (new AbstractController())->unsetSession();
+        break;
+    case '/admin/posts':
+        (new AdminController())->displayAdminPostsPage();
+        break;
+    case '/admin/add-post':
+        (new AdminController())->addPost();
+        break;
+    case '/admin/users':
+        (new AdminController())->viewUsers();
         break;
     default:
         preg_match('/[0-9]+/', $uri, $matches);
