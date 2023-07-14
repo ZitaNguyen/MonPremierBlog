@@ -43,6 +43,8 @@ switch ($uri) {
         $id = $matches[0];
         if(strpos($uri, 'modify-post') !== false)
             (new AdminController())->modifyPost($id);
+        elseif(strpos($uri, 'delete-post') !== false)
+            (new AdminController())->deletePost($id);
         elseif (strpos($uri, 'admin') !== false)
             (new PostController())->getAdminPost($id);
         else

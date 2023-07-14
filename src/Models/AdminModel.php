@@ -46,6 +46,14 @@ class AdminModel
         return $sql->execute();
     }
 
+    public function deletePost($id)
+    {
+        $sql = $this->Db->prepare(
+            "DELETE FROM Post WHERE id = $id"
+        );
+        return $sql->execute();
+    }
+
     public function getCategories()
     {
         $sql = $this->Db->prepare("SELECT c.id, c.name FROM Category c");

@@ -104,7 +104,7 @@ class AdminController extends AbstractController
                     if (!in_array($extension,$extensions)) {
                         $_SESSION['message'] = 'Cette photo n\'est pas valable.';
                         $_SESSION['error_level'] = 'warning';
-                        header("Location: /modify-post-$id");
+                        header("Location: /admin/modify-post-$id");
                     }
 
                     // Generate a unique name for the image to avoid conflicts
@@ -117,13 +117,13 @@ class AdminController extends AbstractController
                     if(!move_uploaded_file($file["tmp_name"], $targetFilePath)) {
                         $_SESSION['message'] = 'Impossible de télécharger la photo.';
                         $_SESSION['error_level'] = 'danger';
-                        header("Location: /modify-post-$id");
+                        header("Location: /admin/modify-post-$id");
                     }
                 }
                 else {
                     $_SESSION['message'] = 'Le champ photo est obligatoire.';
                     $_SESSION['error_level'] = 'danger';
-                    header("Location: /modify-post-$id");
+                    header("Location: /admin/modify-post-$id");
                 }
 
                 $aData = [
@@ -155,5 +155,13 @@ class AdminController extends AbstractController
         $categories = $adminModel->getCategories();
         $post = $postModel->getPost($id);
         $this->twig->display('admin-modify-post.html.twig', ['post' => $post, 'categories' => $categories]);
+    }
+
+    public function deletePost($id)
+    {
+        $adminModel = new AdminModel();
+        $adminModel->deletePost($id);
+        $_SESSION['message'] = 'L\'article est supprimé';
+        header("Location: /admin/posts");
     }
 }
