@@ -79,4 +79,15 @@ class AdminModel
         );
         return $sql->execute();
     }
+
+    public function validateComment($id)
+    {
+        $sql = $this->Db->prepare(
+            "UPDATE Comment
+            SET validate = true
+            WHERE id = :id"
+        );
+        $sql->bindValue(':id', $id, \PDO::PARAM_INT);
+        return $sql->execute();
+    }
 }

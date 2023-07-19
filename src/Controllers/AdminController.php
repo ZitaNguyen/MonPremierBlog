@@ -187,4 +187,18 @@ class AdminController extends AbstractController
         $_SESSION['message'] = 'L\'utilisateur est supprimé';
         header("Location: /admin/users");
     }
+
+    public function viewComments()
+    {
+        $postModel = new PostModel();
+        $comments = $postModel->getComments();
+        $this->twig->display('admin-comments.html.twig', ['comments' => $comments]);
+    }
+
+    public function validateComment($id)
+    {
+        $adminModel = new AdminModel();
+        $adminModel->validateComment($id);
+        header("Location: /admin/comments");
+    }
 }

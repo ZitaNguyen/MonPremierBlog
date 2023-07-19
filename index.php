@@ -41,6 +41,9 @@ switch ($uri) {
     case '/admin/users':
         (new AdminController())->viewUsers();
         break;
+    case '/admin/comments':
+        (new AdminController())->viewComments();
+        break;
     default:
         preg_match('/[0-9]+/', $uri, $matches);
         $id = $matches[0];
@@ -52,6 +55,8 @@ switch ($uri) {
             (new AdminController())->modifyUser($id);
         elseif(strpos($uri, 'delete-user') !== false)
             (new AdminController())->deleteUser($id);
+        elseif(strpos($uri, 'validate-comment') !== false)
+            (new AdminController())->validateComment($id);
         elseif (strpos($uri, 'admin') !== false)
             (new PostController())->getAdminPost($id);
         else
