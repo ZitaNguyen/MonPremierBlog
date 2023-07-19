@@ -172,4 +172,33 @@ class AdminController extends AbstractController
         $users = $userModel->getUsers();
         $this->twig->display('admin-users.html.twig', ['users' => $users]);
     }
+
+    public function modifyUser($id)
+    {
+        $adminModel = new AdminModel();
+        $adminModel->modifyUser($id);
+        header("Location: /admin/users");
+    }
+
+    public function deleteUser($id)
+    {
+        $adminModel = new AdminModel();
+        $adminModel->deleteUser($id);
+        $_SESSION['message'] = 'L\'utilisateur est supprimé';
+        header("Location: /admin/users");
+    }
+
+    public function viewComments()
+    {
+        $postModel = new PostModel();
+        $comments = $postModel->getComments();
+        $this->twig->display('admin-comments.html.twig', ['comments' => $comments]);
+    }
+
+    public function validateComment($id)
+    {
+        $adminModel = new AdminModel();
+        $adminModel->validateComment($id);
+        header("Location: /admin/comments");
+    }
 }

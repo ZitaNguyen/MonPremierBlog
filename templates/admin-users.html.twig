@@ -12,9 +12,9 @@
             <div class="col">
                 <div class="card h-100">
                     {% if user.image is empty %}
-                    <img src="/assets/img/default_profile.png" class="card-img-top" alt="default_image">
+                    <img src="/assets/img/default_profile.png" class="card-img-top img-fluid h-50" alt="default_image">
                     {% else %}
-                    <img src="/assets/img/{{ user.image }}" class="card-img-top" alt="profile_image">
+                    <img src="/assets/img/{{ user.image }}" class="card-img-top img-fluid h-50" alt="profile_image">
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ user.name }}
@@ -24,20 +24,23 @@
                         </h5>
                         <p class="card-text">{{ user.email }}</p>
                     </div>
-                    <div class="card-footer bg-transparent">
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <ul class="list-inline text-center">
-                                    <li class="list-inline-item">
-                                        <a href="/admin/modify-user-{{ user.id }}"><i class="fa-solid fa-pencil"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="/admin/delete-user-{{ user.id }}"><i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                    <!-- Buttons -->
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <ul class="list-inline text-center">
+                                <li class="list-inline-item">
+                                     <a href="/admin/modify-user-{{ user.id }}" class="btn btn-primary {% if 'admin' == user.role %}disabled{% endif %}" role="button">
+                                        {% if 'admin' == user.role %}
+                                            Administrateur
+                                        {% else %}
+                                            Devenir administrateur
+                                        {% endif %}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="/admin/delete-user-{{ user.id }}" class="btn btn-danger" role="button">Supprimer</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

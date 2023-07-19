@@ -64,4 +64,15 @@ class PostModel
         $sql->execute();
         return $sql->fetchAll(\PDO::FETCH_OBJ);
     }
+
+    public function getComments()
+    {
+        $sql = $this->Db->prepare(
+            "SELECT c.id, p.title, c.comment, c.validate
+            FROM Comment c
+            INNER JOIN Post p ON p.id = c.post_id"
+        );
+        $sql->execute();
+        return $sql->fetchAll(\PDO::FETCH_OBJ);
+    }
 }
