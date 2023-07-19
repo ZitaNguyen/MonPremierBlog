@@ -71,4 +71,12 @@ class AdminModel
         $sql->bindValue(':id', $id, \PDO::PARAM_INT);
         return $sql->execute();
     }
+
+    public function deleteUser($id)
+    {
+        $sql = $this->Db->prepare(
+            "DELETE FROM Person WHERE id = $id"
+        );
+        return $sql->execute();
+    }
 }

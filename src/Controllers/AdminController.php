@@ -179,4 +179,12 @@ class AdminController extends AbstractController
         $adminModel->modifyUser($id);
         header("Location: /admin/users");
     }
+
+    public function deleteUser($id)
+    {
+        $adminModel = new AdminModel();
+        $adminModel->deleteUser($id);
+        $_SESSION['message'] = 'L\'utilisateur est supprimé';
+        header("Location: /admin/users");
+    }
 }
