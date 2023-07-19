@@ -48,6 +48,8 @@ switch ($uri) {
             (new AdminController())->modifyPost($id);
         elseif(strpos($uri, 'delete-post') !== false)
             (new AdminController())->deletePost($id);
+        elseif(strpos($uri, 'modify-user') !== false)
+            (new AdminController())->modifyUser($id);
         elseif (strpos($uri, 'admin') !== false)
             (new PostController())->getAdminPost($id);
         else

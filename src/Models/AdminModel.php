@@ -60,4 +60,15 @@ class AdminModel
         $sql->execute();
         return $sql->fetchAll(\PDO::FETCH_OBJ);
     }
+
+    public function modifyUser($id)
+    {
+        $sql = $this->Db->prepare(
+            "UPDATE Person
+            SET role_id = 1
+            WHERE id = :id"
+        );
+        $sql->bindValue(':id', $id, \PDO::PARAM_INT);
+        return $sql->execute();
+    }
 }

@@ -172,4 +172,11 @@ class AdminController extends AbstractController
         $users = $userModel->getUsers();
         $this->twig->display('admin-users.html.twig', ['users' => $users]);
     }
+
+    public function modifyUser($id)
+    {
+        $adminModel = new AdminModel();
+        $adminModel->modifyUser($id);
+        header("Location: /admin/users");
+    }
 }
