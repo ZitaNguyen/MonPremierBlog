@@ -34,6 +34,8 @@ class PostController extends AbstractController
                     $_SESSION['message'] = 'Impossible de postuler votre commentaire.';
                     $_SESSION['error_level'] = 'danger';
                 }
+                $_SESSION['message'] = 'Votre commentaire est en attente de validation.';
+                $_SESSION['error_level'] = 'info';
                 header("Location: /post-$id");
             }
             else {
