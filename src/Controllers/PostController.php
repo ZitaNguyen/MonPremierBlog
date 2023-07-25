@@ -49,7 +49,7 @@ class PostController extends AbstractController
         $post = $postModel->getPost($id);
         $comments = $postModel->getComment($id);
         foreach ($comments as $comment)
-            $comment->create_date = date("d-m-Y", strtotime($comment->create_date));
+            $comment->validate_date = date("d-m-Y", strtotime($comment->validate_date));
         $this->twig->display('post.html.twig', ['post' => $post, 'comments' => $comments]);
     }
 
@@ -59,7 +59,7 @@ class PostController extends AbstractController
         $post = $postModel->getPost($id);
         $comments = $postModel->getComment($id);
         foreach ($comments as $comment)
-            $comment->create_date = date("d-m-Y", strtotime($comment->create_date));
+            $comment->validate_date = date("d-m-Y", strtotime($comment->validate_date));
         $this->twig->display('admin-view-post.html.twig', ['post' => $post, 'comments' => $comments]);
     }
 }
