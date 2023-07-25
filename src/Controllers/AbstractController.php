@@ -18,7 +18,8 @@ class AbstractController
 
     public function unsetSession()
     {
-        unset($_SESSION['message']);
-        unset($_SESSION['error_level']);
+        if (isset($_SESSION['message']))      unset($_SESSION['message']);
+        if (isset($_SESSION['error_level']))  unset($_SESSION['error_level']);
+        var_dump($_SESSION); die;
     }
 }

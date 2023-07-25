@@ -98,5 +98,26 @@
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <!-- Unset session message -->
+        <script>
+            // Add an event listener to the button
+            document.getElementById('unsetSessionMessage').addEventListener('click', function() {
+                // Send an HTTP request to the controller function using fetch
+                fetch('/unset')
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Session variable "message" unset successfully.');
+                            // Optionally, you can reload the page or update the UI as needed.
+                            // window.location.reload();
+                        } else {
+                            console.error('Failed to unset session variable "message".');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('An error occurred:', error);
+                    });
+            });
+        </script>
+
     </body>
 </html>
