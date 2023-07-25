@@ -7,34 +7,38 @@
 {% block main %}
     <!-- Content -->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-3">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Titre</th>
-                <th scope="col">Commentaire</th>
-                <th scope="col">Validé</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for comment in comments %}
-                <tr>
-                    <th scope="row">{{ comment.id }}</th>
-                    <td>{{ comment.title }}</td>
-                    <td>{{ comment.comment }}</td>
-                    <td>
-                        <a href="/admin/validate-comment-{{ comment.id }}" class="btn btn-primary {% if comment.validate %}disabled{% endif %}" role="button">
-                            {% if comment.validate %}
-                                Oui
-                            {% else %}
-                                Non
-                            {% endif %}
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
+        {% if session.user_role is not defined or session.user_role != 'admin' %}
+            <h1 class="mt-5">401 Accès interdit</h1>
+        {% else %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Commentaire</th>
+                    <th scope="col">Validé</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comment in comments %}
+                    <tr>
+                        <th scope="row">{{ comment.id }}</th>
+                        <td>{{ comment.title }}</td>
+                        <td>{{ comment.comment }}</td>
+                        <td>
+                            <a href="/admin/validate-comment-{{ comment.id }}" class="btn btn-primary {% if comment.validate %}disabled{% endif %}" role="button">
+                                {% if comment.validate %}
+                                    Oui
+                                {% else %}
+                                    Non
+                                {% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
+        {% endif %}
     </main>
 {% endblock %}
 

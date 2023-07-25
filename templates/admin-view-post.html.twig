@@ -6,67 +6,71 @@
 
 {% block main %}
  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-3">
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('assets/img/{{ post.image }}')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="post-heading">
-                        <h1>{{ post.title }}</h1>
-                        <h2 class="subheading">{{ post.excerpt }}</h2>
-                        <span class="meta">
-                            Posted by
-                            <a href="#!">{{ post.name }}</a>
-                            on {{ post.modifyDate }}
-                        </span>
+    {% if session.user_role is not defined or session.user_role != 'admin' %}
+        <h1 class="mt-5">401 Accès interdit</h1>
+    {% else %}
+        <!-- Page Header -->
+        <header class="masthead" style="background-image: url('assets/img/{{ post.image }}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="post-heading">
+                            <h1>{{ post.title }}</h1>
+                            <h2 class="subheading">{{ post.excerpt }}</h2>
+                            <span class="meta">
+                                Posted by
+                                <a href="#!">{{ post.name }}</a>
+                                on {{ post.modifyDate }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Post Content -->
-    <article class="mb-4">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <p>{{ post.content}}</p>
-                    <hr class="mt-5">
-                    <p class="fw-bold fst-italic">Commentaires</p>
-                    {% if comments is not empty %}
-                        {% for comment in comments %}
-                            <div class="card mb-3">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        {% if comment.image is empty %}
-                                        <img src="/assets/img/default_profile.png" class="img-thumbnail align-items-center" alt="default_image">
-                                        {% else %}
-                                        <img src="/assets/img/{{ comment.image }}" class="img-thumbnail" alt="profile_image">
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ comment.name }}</h5>
-                                            <p class="card-text">{{ comment.comment }}</p>
-                                            <p class="card-text"><small class="text-muted">{{ comment.create_date }}</small></p>
+        <!-- Post Content -->
+        <article class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <p>{{ post.content}}</p>
+                        <hr class="mt-5">
+                        <p class="fw-bold fst-italic">Commentaires</p>
+                        {% if comments is not empty %}
+                            {% for comment in comments %}
+                                <div class="card mb-3">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {% if comment.image is empty %}
+                                            <img src="/assets/img/default_profile.png" class="img-thumbnail align-items-center" alt="default_image">
+                                            {% else %}
+                                            <img src="/assets/img/{{ comment.image }}" class="img-thumbnail" alt="profile_image">
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ comment.name }}</h5>
+                                                <p class="card-text">{{ comment.comment }}</p>
+                                                <p class="card-text"><small class="text-muted">{{ comment.create_date }}</small></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                    <p class="text-muted fs-6 fst-italic">0 commentaire</p>
-                    {% endif %}
+                            {% endfor %}
+                        {% else %}
+                        <p class="text-muted fs-6 fst-italic">0 commentaire</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
 
-    <!-- Buttons to modify and delete post -->
-    <div class="d-grid gap-2 d-flex justify-content-center">
-        <a class="btn btn-dark btn-lg me-2" href="/admin/modify-post-{{ post.id }}" role="button" title="Modifier"><i class="fa-solid fa-pencil"></i></a>
-        <a class="btn btn-dark btn-lg" href="/admin/delete-post-{{ post.id }}" role="button" title="Supprimer"><i class="fa-solid fa-trash-can"></i></a>
-    </div>
+        <!-- Buttons to modify and delete post -->
+        <div class="d-grid gap-2 d-flex justify-content-center">
+            <a class="btn btn-dark btn-lg me-2" href="/admin/modify-post-{{ post.id }}" role="button" title="Modifier"><i class="fa-solid fa-pencil"></i></a>
+            <a class="btn btn-dark btn-lg" href="/admin/delete-post-{{ post.id }}" role="button" title="Supprimer"><i class="fa-solid fa-trash-can"></i></a>
+        </div>
+    {% endif %}
 </main>
 
 {% endblock %}
