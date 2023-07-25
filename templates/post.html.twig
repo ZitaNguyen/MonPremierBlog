@@ -29,6 +29,13 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
+                {% if session.message is defined %}
+                <div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
+                    {{ session.message }}
+                    {# <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> #}
+                    <a class="btn-close" data-bs-dismiss="alert" aria-label="Close" href="/unset" role="button"></a>
+                </div>
+                {% endif %}
                 <p>{{ post.content}}</p>
                 <hr class="mt-5">
                 <p class="fw-bold fst-italic">Commentaires</p>
@@ -65,7 +72,7 @@
                             <div class="invalid-feedback" data-sb-feedback="comment:required">Commentaire est obligatoire.</div>
                         </div>
                         <!-- Submit Button-->
-                        <div class="text-center"><button class="btn btn-dark text-uppercase" name="submitAddCommentButton" type="submit">Postuler</button></div>
+                        <div class="text-center mt-3"><button class="btn btn-dark text-uppercase" name="submitAddCommentButton" type="submit">Postuler</button></div>
                     </form>
                 </div>
                 {% endif %}

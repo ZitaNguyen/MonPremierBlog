@@ -59,7 +59,7 @@ class PostModel
             FROM Comment c
             INNER JOIN Post p ON p.id = c.post_id
             INNER JOIN Person ps ON ps.id = c.person_id
-            WHERE c.post_id = $id"
+            WHERE c.post_id = $id AND c.validate = true"
         );
         $sql->execute();
         return $sql->fetchAll(\PDO::FETCH_OBJ);
