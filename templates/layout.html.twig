@@ -76,14 +76,16 @@
                                     </span>
                                 </a>
                             </li>
+                            {% if session.user_role is defined and session.user_role == 'admin' %}
                             <li class="list-inline-item">
                                 <a href="/admin/posts">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-folder-gear fa-stack-1x fa-inverse"></i>
+                                        <i class="fas fa-user fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
                             </li>
+                            {% endif %}
                         </ul>
                         <div class="small text-center text-muted fst-italic">Copyright &copy; Zita Nguyen 2023</div>
                     </div>

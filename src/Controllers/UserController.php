@@ -117,7 +117,7 @@ class UserController extends AbstractController
                 else {
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['name'];
-                    $_SESSION['role'] = $user['role'];
+                    $_SESSION['user_role'] = $user['role'];
                     header('Location: /');
                 }
             }
@@ -134,7 +134,7 @@ class UserController extends AbstractController
     {
         unset($_SESSION['user_id']);
         unset($_SESSION['username']);
-        unset($_SESSION['role']);
+        unset($_SESSION['user_role']);
 
         header("Location: /");
     }
