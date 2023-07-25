@@ -84,7 +84,7 @@ class AdminModel
     {
         $sql = $this->Db->prepare(
             "UPDATE Comment
-            SET validate = true
+            SET validate = true, validate_date = NOW()
             WHERE id = :id"
         );
         $sql->bindValue(':id', $id, \PDO::PARAM_INT);
