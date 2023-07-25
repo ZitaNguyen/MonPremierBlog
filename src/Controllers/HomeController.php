@@ -21,28 +21,31 @@ class HomeController extends AbstractController
 
                 try {
                     //Server settings
-                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
                     $mail->isSMTP();                                            //Send using SMTP
-                    $mail->Host       = 'smtp.example.com';                     //Set the SMTP server to send through
+                    $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
                     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                    $mail->Username   = 'zitanguyen84@gmail.com';                     //SMTP username
+                    $mail->Username   = 'zitanguyen84@gmail.com';               //SMTP username
                     $mail->Password   = 'secret';                               //SMTP password
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
                     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
                     //Recipients
                     $mail->setFrom($mail->Username, 'Zita Nguyen');
-                    $mail->addAddress($_POST['email'], $_POST['name']);     //Add a recipient
+                    $mail->addAddress($mail->Username);     //Add a recipient
 
                     //Content
                     $mail->isHTML(true);                                  //Set email format to HTML
-                    $mail->Subject = 'Un email envoyé du blog Zita Nguyen';
-                    $mail->Body    = 'Votre email est bien envoyé.';
+                    $mail->Subject = 'Un email du blog Zita Nguyen';
+                    $mail->Body    = "{$_POST['name']} du {$_POST['email']} écrit: {$_POST['message']}";
 
                     $mail->send();
-                    echo 'Message has been sent'; // message in $_SESSION
+                    $_SESSION['message'] = 'Votre message été envoyé';
+                    $_SESSION['error_level'] = 'info';
                 } catch (Exception $e) {
-                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    $_SESSION['message'] = "Impossible d'envoyer votre message. Erreur: {$mail->ErrorInfo}";
+                    $_SESSION['error_level'] = 'warning';
+                    header("Location: /");
                 }
             }
         }
