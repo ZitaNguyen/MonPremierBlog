@@ -30,10 +30,10 @@
                             <p class="card-text">{{ user.email }}</p>
                         </div>
                         <!-- Buttons -->
-                        <div class="row justify-content-between">
-                            <div class="col">
+                        <div class="row justify-content-around">
+                            <div class="col-12 col-md-auto">
                                 <ul class="list-inline text-center">
-                                    <li class="list-inline-item">
+                                    <li class="list-inline-item mb-3">
                                         <a href="/admin/modify-user-{{ user.id }}" class="btn btn-primary {% if 'admin' == user.role %}disabled{% endif %}" role="button">
                                             {% if 'admin' == user.role %}
                                                 Administrateur
