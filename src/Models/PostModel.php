@@ -19,8 +19,7 @@ class PostModel
             "SELECT p.id, p.title, p.excerpt, p.image, DATE_FORMAT(p.modify_date, '%d/%m/%Y') AS modifyDate, ps.name
             FROM Post p
             INNER JOIN Person ps ON p.person_id = ps.id
-            ORDER BY create_date DESC
-            LIMIT 5"
+            ORDER BY create_date DESC"
         );
         $sql->execute();
         return $sql->fetchAll(\PDO::FETCH_OBJ);
