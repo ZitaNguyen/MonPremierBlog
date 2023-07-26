@@ -6,7 +6,7 @@
 
 {% block main %}
 <!-- Page Header -->
-<header class="masthead" style="background-image: url('assets/img/{{ post.image }}')">
+<header class="masthead" style="background-image: url('public/assets/img/{{ post.image }}')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
@@ -44,9 +44,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     {% if comment.image is empty %}
-                                    <img src="/assets/img/default_profile.png" class="img-thumbnail align-items-center" alt="default_image">
+                                    <img src="public/assets/img/default_profile.png" class="img-thumbnail align-items-center" alt="default_image">
                                     {% else %}
-                                    <img src="/assets/img/{{ comment.image }}" class="img-thumbnail" alt="profile_image">
+                                    <img src="public/assets/img/{{ comment.image }}" class="img-thumbnail" alt="profile_image">
                                     {% endif %}
                                 </div>
                                 <div class="col-md-8">
