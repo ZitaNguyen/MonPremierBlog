@@ -6,11 +6,21 @@
 
 {% block main %}
     <!-- Content -->
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-3">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% if session.user_role is not defined or session.user_role != 'admin' %}
-                <h1 class="mt-5">401 Accès interdit</h1>
-            {% else %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 my-3">
+        {% if session.user_role is not defined or session.user_role != 'admin' %}
+            <h1 class="mt-5">401 Accès interdit</h1>
+        {% else %}
+            {% if session.message is defined %}
+                <div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
+                    {{ session.message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="unsetSessionMessage"></button>
+                </div>
+            {% endif %}
+            <!-- Button add post -->
+            <a href="/admin/add-post" class="btn btn-primary mb-3" role="button">
+                Ajouter un article
+            </a>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
                 {% for post in posts %}
                 <div class="col">
                     <div class="card h-100">
