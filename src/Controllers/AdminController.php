@@ -163,6 +163,7 @@ class AdminController extends AbstractController
         $adminModel = new AdminModel();
         $adminModel->deletePost($id);
         $_SESSION['message'] = 'L\'article est supprimé';
+        $_SESSION['error_level'] = 'info';
         header("Location: /admin/posts");
     }
 
@@ -185,6 +186,7 @@ class AdminController extends AbstractController
         $adminModel = new AdminModel();
         $adminModel->deleteUser($id);
         $_SESSION['message'] = 'L\'utilisateur est supprimé';
+        $_SESSION['error_level'] = 'info';
         header("Location: /admin/users");
     }
 
