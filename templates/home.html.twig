@@ -1,89 +1,89 @@
 {% extends "layout.html.twig" %}
 
 {% block title %}
-    Fullstack Développeuse
+	Fullstack Développeuse
 {% endblock %}
 
 {% block main %}
 <!-- Page Header-->
 <header class="masthead" style="background-image: url('public/assets/img/home-bg.jpg')">
-    <div class="container position-relative px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="site-heading">
-                    <h1>Zita Nguyen</h1>
-                    <span class="subheading">Mon Premier Blog</span>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container position-relative px-4 px-lg-5">
+		<div class="row gx-4 gx-lg-5 justify-content-center">
+			<div class="col-md-10 col-lg-8 col-xl-7">
+				<div class="site-heading">
+					<h1>Zita Nguyen</h1>
+					<span class="subheading">Mon Premier Blog</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </header>
 
 <!-- Main Content-->
 <div class="container-fluid">
-    <div class="row justify-content-center">
-        <!-- Last post -->
-        <div class="col-md-10 col-lg-8 col-xl-7">
-        {% if session.message is defined %}
-            <div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
-                {{ session.message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="unsetSessionMessage"></button>
-            </div>
-        {% endif %}
-            <h1>Mon Dernier Article</h1>
-            <!-- Post preview-->
-            <div class="post-preview">
-                <a href="../post-{{ post.id }}">
-                    <h2 class="post-title">{{ post.title }}</h2>
-                    <h3 class="post-subtitle">{{ post.excerpt }}</h3>
-                </a>
-                <p class="post-meta">
-                    Postulé par
-                    <a href="#!">{{post.name}}</a>
-                    le {{post.modifyDate}}
-                </p>
-            </div>
-            <!-- Divider-->
-            <hr class="my-4" />
-        </div>
-        <!-- About me -->
-        <div class="col-md-10 col-lg-8 col-xl-7 my-5" id="about-me">
-            <h1>A propos</h1>
-            <div class="d-flex gap-5 my-5">
-                <img src="public/assets/img/about-bg.jpg" class="d-none d-lg-block" alt="About Zita">
-                <p>Zita est une fullstack développeuse Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-            <!-- Divider-->
-            <hr class="my-4" />
-        </div>
-        <!-- Contact Form -->
-        <div class="col-md-10 col-lg-8 col-xl-7" id="contact-form">
-            <h1>Contactez-moi</h1>
-            <p>Envie d'échanger une idée? Envoyez-moi un message.</p>
-            <div class="my-5">
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="POST" action="/">
-                    <div class="form-floating">
-                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name..." data-sb-validations="required" required/>
-                        <label for="name">Votre nom</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">Votre nom est obligatoire.</div>
-                    </div>
-                    <div class="form-floating">
-                        <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" required/>
-                        <label for="email">Votre email</label>
-                        <div class="invalid-feedback" data-sb-feedback="email:required">Votre email est obligatoire.</div>
-                        <div class="invalid-feedback" data-sb-feedback="email:email">Email entrée n'est pas valid.</div>
-                    </div>
-                    <div class="form-floating">
-                        <textarea class="form-control" id="message" name="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required" required></textarea>
-                        <label for="message">Message</label>
-                        <div class="invalid-feedback" data-sb-feedback="message:required">Votre message est obligatoire.</div>
-                    </div>
-                    <!-- Submit Button-->
-                    <div class="text-center mt-3"><button class="btn btn-dark text-uppercase" name="submitContactFormButton" type="submit">Envoyer</button></div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<div class="row justify-content-center">
+		<!-- Last post -->
+		<div class="col-md-10 col-lg-8 col-xl-7">
+		{% if session.message is defined %}
+			<div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
+				{{ session.message }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="unsetSessionMessage"></button>
+			</div>
+		{% endif %}
+			<h1>Mon Dernier Article</h1>
+			<!-- Post preview-->
+			<div class="post-preview">
+				<a href="../post-{{ post.id }}">
+					<h2 class="post-title">{{ post.title }}</h2>
+					<h3 class="post-subtitle">{{ post.excerpt }}</h3>
+				</a>
+				<p class="post-meta">
+					Postulé par
+					<a href="#!">{{post.name}}</a>
+					le {{post.modifyDate}}
+				</p>
+			</div>
+			<!-- Divider-->
+			<hr class="my-4" />
+		</div>
+		<!-- About me -->
+		<div class="col-md-10 col-lg-8 col-xl-7 my-5" id="about-me">
+			<h1>A propos</h1>
+			<div class="d-flex gap-5 my-5">
+				<img src="public/assets/img/about-bg.jpg" class="d-none d-lg-block" alt="About Zita">
+				<p>Zita est une fullstack développeuse Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+			</div>
+			<!-- Divider-->
+			<hr class="my-4" />
+		</div>
+		<!-- Contact Form -->
+		<div class="col-md-10 col-lg-8 col-xl-7" id="contact-form">
+			<h1>Contactez-moi</h1>
+			<p>Envie d'échanger une idée? Envoyez-moi un message.</p>
+			<div class="my-5">
+				<form id="contactForm" data-sb-form-api-token="API_TOKEN" method="POST" action="/">
+					<div class="form-floating">
+						<input class="form-control" id="name" name="name" type="text" placeholder="Enter your name..." data-sb-validations="required" required/>
+						<label for="name">Votre nom</label>
+						<div class="invalid-feedback" data-sb-feedback="name:required">Votre nom est obligatoire.</div>
+					</div>
+					<div class="form-floating">
+						<input class="form-control" id="email" name="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" required/>
+						<label for="email">Votre email</label>
+						<div class="invalid-feedback" data-sb-feedback="email:required">Votre email est obligatoire.</div>
+						<div class="invalid-feedback" data-sb-feedback="email:email">Email entrée n'est pas valid.</div>
+					</div>
+					<div class="form-floating">
+						<textarea class="form-control" id="message" name="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required" required></textarea>
+						<label for="message">Message</label>
+						<div class="invalid-feedback" data-sb-feedback="message:required">Votre message est obligatoire.</div>
+					</div>
+					<!-- Submit Button-->
+					<div class="text-center mt-3"><button class="btn btn-dark text-uppercase" name="submitContactFormButton" type="submit">Envoyer</button></div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}
