@@ -1,54 +1,54 @@
 {% extends "layout-admin.html.twig" %}
 
 {% block title %}
-	Utilisateurs
+    Utilisateurs
 {% endblock %}
 
 {% block main %}
-	<!-- Content -->
-	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-3">
-		<div class="row row-cols-1 row-cols-md-3 g-4">
-			{% if session.message is defined %}
-				<div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
-					{{ session.message }}
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="unsetSessionMessage"></button>
-				</div>
-			{% endif %}
-			{% for user in users %}
-			<div class="col">
-				<div class="card h-100">
-					{% if user.image is empty %}
-					<img src="/public/assets/img/default_profile.png" class="card-img-top img-fluid h-50" alt="default_image">
-					{% else %}
-					<img src="/public/assets/img/{{ user.image }}" class="card-img-top img-fluid h-50" alt="profile_image">
-					{% endif %}
-					<div class="card-body">
-						<h5 class="card-title">{{ user.name }}</h5>
-						<p class="card-text">{{ user.email }}</p>
-					</div>
-					<!-- Buttons -->
-					<div class="row justify-content-around">
-						<div class="col-12 col-md-auto">
-							<ul class="list-inline text-center">
-								<li class="list-inline-item mb-3">
-									<a href="/admin/modify-user-{{ user.id }}" class="btn btn-primary {% if 'admin' == user.role %}disabled{% endif %}" role="button">
-										{% if 'admin' == user.role %}
-											Administrateur
-										{% else %}
-											Devenir administrateur
-										{% endif %}
-									</a>
-								</li>
-								<li class="list-inline-item">
-									<a href="/admin/delete-user-{{ user.id }}" class="btn btn-danger" role="button">Supprimer</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
-	</main>
+    <!-- Content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mb-3">
+            {% if session.message is defined %}
+                <div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
+                    {{ session.message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="unsetSessionMessage"></button>
+                </div>
+            {% endif %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for user in users %}
+            <div class="col">
+                <div class="card h-100">
+                    {% if user.image is empty %}
+                    <img src="/public/assets/img/default_profile.png" class="card-img-top img-fluid h-50" alt="default_image">
+                    {% else %}
+                    <img src="/public/assets/img/{{ user.image }}" class="card-img-top img-fluid h-50" alt="profile_image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.name | upper }}</h5>
+                        <p class="card-text">{{ user.email }}</p>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="row justify-content-around">
+                        <div class="col-12 col-md-auto">
+                            <ul class="list-inline text-center">
+                                <li class="list-inline-item mb-3">
+                                    <a href="/admin/modify-user-{{ user.id }}" class="btn btn-primary {% if 'admin' == user.role %}disabled{% endif %}" role="button">
+                                        {% if 'admin' == user.role %}
+                                            Administrateur
+                                        {% else %}
+                                            Devenir administrateur
+                                        {% endif %}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="/admin/delete-user-{{ user.id }}" class="btn btn-danger" role="button">Supprimer</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
 {% endblock %}
 
