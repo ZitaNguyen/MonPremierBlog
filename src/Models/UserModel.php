@@ -40,7 +40,8 @@ class UserModel
     public function getUser($email)
     {
         $sql = $this->Db->prepare(
-            "SELECT p.*, r.role FROM Person p
+            "SELECT p.*, r.role
+            FROM Person p
             INNER JOIN Role r ON p.role_id = r.id
             WHERE email = :email");
         $sql->bindParam(':email', $email);

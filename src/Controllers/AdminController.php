@@ -35,9 +35,6 @@ class AdminController extends AbstractController
                 if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
                     $file = $_FILES["image"];
 
-                    // Specify the directory to which you want to save the uploaded image.
-                    $targetDir = "public/assets/img/";
-
                     // Check extension format.
                     $extensions = ['.png','.jpg','.jpeg','.gif','.PNG','.JPG','.JPEG','.GIF'];
                     $extension = strrchr($file["name"], '.');
@@ -46,6 +43,9 @@ class AdminController extends AbstractController
                         $_SESSION['error_level'] = 'warning';
                         header('Location: /admin/add-post');
                     }
+
+                    // Specify the directory to which you want to save the uploaded image.
+                    $targetDir = "public/assets/img/";
 
                     // Generate a unique name for the image to avoid conflicts.
                     $fileName = uniqid()."_".$file["name"];
@@ -62,12 +62,12 @@ class AdminController extends AbstractController
                 }
 
                 $aData = [
-                            'title' => $_POST['title'],
-                            'excerpt' => $_POST['excerpt'],
-                            'content' => $_POST['content'],
-                            'person_id' => 1,
-                            'category_id' => $_POST['category'],
-                            'image' => $fileName
+                            'title'         => $_POST['title'],
+                            'excerpt'       => $_POST['excerpt'],
+                            'content'       => $_POST['content'],
+                            'person_id'     => 1,
+                            'category_id'   => $_POST['category'],
+                            'image'         => $fileName
                         ];
 
                 $success = $adminModel->addPost($aData);
