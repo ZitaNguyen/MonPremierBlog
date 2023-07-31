@@ -30,7 +30,7 @@
             {% endif %}
             <p>Commencez à créer votre compte afin d'avoir des droits d'utilisateur</p>
             <div class="my-5">
-                <form id="register" data-sb-form-api-token="API_TOKEN" method="POST">
+                <form id="register" data-sb-form-api-token="API_TOKEN" method="POST" enctype="multipart/form-data">
                     <div class="form-floating">
                         <input class="form-control" id="username" name="username" type="text" placeholder="Enter your username..." data-sb-validations="required" required/>
                         <label for="username">Nom d'utilisateur</label>

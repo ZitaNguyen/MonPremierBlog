@@ -20,24 +20,16 @@ class UserController extends AbstractController
             if (!empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['confirmation'])) {
                 // Check email account exists.
                 $user = $userModel->getUser($_POST['email']);
-                if ($user) {
+                if (isset($user['id'])) {
                     $_SESSION['message'] = 'Email est déjà enregistré.';
                     $_SESSION['error_level'] = 'info';
                     header('Location: /register');
-                }
-
-                // Check password confirmation.
-                if ($_POST['password'] != $_POST['confirmation']) {
+                } elseif ($_POST['password'] != $_POST['confirmation']) { // Check confirmation
                     $_SESSION['message'] = 'La confirmation ne correspond pas à votre mot de passe.';
                     $_SESSION['error_level'] = 'warning';
                     header('Location: /register');
-                }
-
-                if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+                } elseif (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
                     $file = $_FILES["image"];
-
-                    // Specify the directory to which you want to save the uploaded image.
-                    $targetDir = "public/assets/img/";
 
                     // Check extension format.
                     $extensions = ['.png','.jpg','.jpeg','.gif','.PNG','.JPG','.JPEG','.GIF'];
@@ -47,6 +39,9 @@ class UserController extends AbstractController
                         $_SESSION['error_level'] = 'warning';
                         header('Location: /register');
                     }
+
+                    // Specify the directory to which you want to save the uploaded image.
+                    $targetDir = "public/assets/img/";
 
                     // Generate a unique name for the image to avoid conflicts.
                     $fileName = uniqid()."_".$file["name"];
@@ -63,11 +58,11 @@ class UserController extends AbstractController
                 }
 
                 $aData = [
-                            'name' => $_POST['username'],
-                            'email' => $_POST['email'],
-                            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-                            'image' => $fileName ?? '',
-                            'role_id' => 2
+                            'name'      => $_POST['username'],
+                            'email'     => $_POST['email'],
+                            'password'  => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                            'image'     => $fileName,
+                            'role_id'   => 2
                         ];
 
                 $success = $userModel->register($aData);
@@ -80,6 +75,7 @@ class UserController extends AbstractController
                     $_SESSION['error_level'] = 'success';
                     header('Location: /login');
                 }
+
             } else {
                 $_SESSION['message'] = 'Tous les champs doivent être remplis.';
                 $_SESSION['error_level'] = 'danger';
@@ -107,13 +103,10 @@ class UserController extends AbstractController
                     $_SESSION['message'] = 'Email non existe. Veuillez créer votre compte.';
                     $_SESSION['error_level'] = 'danger';
                     header('Location: /register');
-                }
-
-                // Check password.
-                $hash = $user['password'];
-                if (!password_verify($_POST['password'], $hash)) {
+                } elseif (!password_verify($_POST['password'], $user['password'])) { // Check password
                     $_SESSION['message'] = 'Mot de passe incorrect';
                     $_SESSION['error_level'] = 'danger';
+                    header('Location: /login');
                 } else {
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['name'];
@@ -123,6 +116,7 @@ class UserController extends AbstractController
             } else {
                 $_SESSION['message'] = 'Tous les champs doivent être remplis.';
                 $_SESSION['error_level'] = 'warning';
+                header('Location: /login');
             }
         }
 

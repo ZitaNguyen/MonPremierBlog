@@ -3,13 +3,6 @@ session_start();
 
 include 'vendor/autoload.php';
 
-// use App\Controllers\AbstractController;
-// use App\Controllers\HomeController;
-// use App\Controllers\PostController;
-// use App\Controllers\AdminController;
-// use App\Controllers\UserController;
-// use App\Controllers\ErrorController;
-
 define('ROOT_PATH', __DIR__.'/src/');
 
 // Parse the requested URL
