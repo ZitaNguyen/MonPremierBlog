@@ -7,21 +7,23 @@ use App\Library\Database;
 class AdminModel
 {
 
-    protected $Db;
+    protected $Database;
 
 
     public function __construct()
     {
-        $this->Db = new Database();
+        $this->Database = new Database();
     }
 
 
     /**
      * Query to add a new post to the database.
+     * @param array $aData
+     * @return boolean True if the query was successfully executed, false otherwise.
      */
     public function addPost($aData)
     {
-        $sql = $this->Db->prepare(
+        $sql = $this->Database->prepare(
             "INSERT INTO Post (title, excerpt, content, person_id, category_id, image)
             VALUES (:title, :excerpt, :content, :person_id, :category_id, :image)"
         );
@@ -37,10 +39,12 @@ class AdminModel
 
     /**
      * Query to update a post.
+     * @param array $aData
+     * @return boolean True if the query was successfully executed, false otherwise.
      */
     public function modifyPost($aData)
     {
-        $sql = $this->Db->prepare(
+        $sql = $this->Database->prepare(
             "UPDATE Post
             SET title = :title, excerpt = :excerpt, content = :content,
                 person_id = :person_id, category_id = :category_id,
@@ -60,22 +64,23 @@ class AdminModel
 
     /**
      * Query to delete a single post with id.
+     * @param integer $idPost
+     * @return boolean True if the query was successfully executed, false otherwise.
      */
-    public function deletePost($id)
+    public function deletePost($idPost)
     {
-        $sql = $this->Db->prepare(
-            "DELETE FROM Post WHERE id = $id"
-        );
+        $sql = $this->Database->prepare("DELETE FROM Post WHERE id = $idPost");
         return $sql->execute();
     }
 
 
     /**
      * Query to get all categories of blog.
+     * @return array
      */
     public function getCategories()
     {
-        $sql = $this->Db->prepare("SELECT c.id, c.name FROM Category c");
+        $sql = $this->Database->prepare("SELECT c.id, c.name FROM Category c");
         $sql->execute();
         return $sql->fetchAll(\PDO::FETCH_OBJ);
     }
@@ -83,37 +88,40 @@ class AdminModel
 
     /**
      * Query to update user role.
+     * @param integer $idUser
      */
-    public function modifyUser($id)
+    public function modifyUser($idUser)
     {
-        $sql = $this->Db->prepare(
+        $sql = $this->Database->prepare(
             "UPDATE Person
             SET role_id = 1
             WHERE id = :id"
         );
-        $sql->bindValue(':id', $id, \PDO::PARAM_INT);
+        $sql->bindValue(':id', $idUser, \PDO::PARAM_INT);
         return $sql->execute();
     }
 
 
     /**
      * Query to delete a user.
+     * @param integer $idUser
+     * @return boolean True if the query was successfully executed, false otherwise.
      */
-    public function deleteUser($id)
+    public function deleteUser($idUser)
     {
-        $sql = $this->Db->prepare(
-            "DELETE FROM Person WHERE id = $id"
-        );
+        $sql = $this->Database->prepare("DELETE FROM Person WHERE id = $idUser");
         return $sql->execute();
     }
 
 
     /**
      * Query to validate a comment.
+     * @param integer $idComment
+     * @return boolean True if the query was successfully executed, false otherwise.
      */
     public function validateComment($idComment)
     {
-        $sql = $this->Db->prepare(
+        $sql = $this->Database->prepare(
             "UPDATE Comment
             SET validate = true, validate_date = NOW()
             WHERE id = :id"
@@ -125,10 +133,12 @@ class AdminModel
 
     /**
      * Query to validate immediately a comment of an admin.
+     * @param integer $idPost
+     * @return boolean true if the query was successfully executed, false otherwise.
      */
     public function validateAdminComment($idPost)
     {
-        $sql = $this->Db->prepare(
+        $sql = $this->Database->prepare(
             "UPDATE Comment AS c1
             INNER JOIN (
                 SELECT MAX(id) AS max_id
@@ -141,4 +151,6 @@ class AdminModel
         $sql->bindValue(':id', $idPost, \PDO::PARAM_INT);
         return $sql->execute();
     }
+
+
 }

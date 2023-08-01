@@ -9,6 +9,7 @@ class Loader
     public function init()
     {
         spl_autoload_register(array(__CLASS__, '_loadClasses'));
+
     }
 
 
@@ -18,6 +19,8 @@ class Loader
 
         if (is_file(ROOT_PATH . $Class . '.php'))
             require_once ROOT_PATH . $Class . '.php';
+
     }
+
     
 }
