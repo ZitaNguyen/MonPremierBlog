@@ -111,14 +111,14 @@ class AdminModel
     /**
      * Query to validate a comment.
      */
-    public function validateComment($id)
+    public function validateComment($idComment)
     {
         $sql = $this->Db->prepare(
             "UPDATE Comment
             SET validate = true, validate_date = NOW()
             WHERE id = :id"
         );
-        $sql->bindValue(':id', $id, \PDO::PARAM_INT);
+        $sql->bindValue(':id', $idComment, \PDO::PARAM_INT);
         return $sql->execute();
     }
 
@@ -126,7 +126,7 @@ class AdminModel
     /**
      * Query to validate immediately a comment of an admin.
      */
-    public function validateAdminComment($id)
+    public function validateAdminComment($idPost)
     {
         $sql = $this->Db->prepare(
             "UPDATE Comment AS c1
@@ -138,7 +138,7 @@ class AdminModel
             SET c1.validate = true, c1.validate_date = NOW()
             WHERE c1.post_id = :id"
         );
-        $sql->bindValue(':id', $id, \PDO::PARAM_INT);
+        $sql->bindValue(':id', $idPost, \PDO::PARAM_INT);
         return $sql->execute();
     }
 }

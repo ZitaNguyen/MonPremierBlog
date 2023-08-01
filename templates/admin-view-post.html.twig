@@ -57,6 +57,17 @@
                     {% else %}
                     <p class="text-muted fs-6 fst-italic">0 commentaire</p>
                     {% endif %}
+                    <!-- Comment -->
+                    <div>
+                        <form id="addComment" data-sb-form-api-token="API_TOKEN" method="POST">
+                            <div>
+                                <textarea class="form-control border" id="comment" name="comment" placeholder="Ajouter votre commentaire..." style="height: 15rem" data-sb-validations="required" required></textarea>
+                                <div class="invalid-feedback" data-sb-feedback="comment:required">Commentaire est obligatoire.</div>
+                            </div>
+                            <!-- Submit Button-->
+                            <div class="text-center mt-3"><button class="btn btn-dark text-uppercase" name="submitAddCommentButton" type="submit">Postuler</button></div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

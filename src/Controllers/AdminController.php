@@ -10,6 +10,7 @@ use App\Models\UserModel;
 class AdminController extends AbstractController
 {
 
+
     /**
      * Function to show all posts at admin page.
      * @return void
@@ -19,7 +20,9 @@ class AdminController extends AbstractController
         $postModel  = new PostModel();
         $posts = $postModel->getPosts();
         $this->twig->display('admin-posts.html.twig', ['posts' => $posts]);
-    } // end displayAdminPostsPage
+        //end displayAdminPostsPage
+
+    }
 
 
     /**
@@ -45,41 +48,42 @@ class AdminController extends AbstractController
 
                 // Prepare data to add into database.
                 $aData = [
-                            'title'         => $title,
-                            'excerpt'       => $excerpt,
-                            'content'       => $content,
-                            'person_id'     => 1,
-                            'category_id'   => $category,
-                            'image'         => $fileName
-                        ];
+                    'title'         => $title,
+                    'excerpt'       => $excerpt,
+                    'content'       => $content,
+                    'person_id'     => 1,
+                    'category_id'   => $category,
+                    'image'         => $fileName
+                ];
 
                 // Add post into database.
                 $success = $adminModel->addPost($aData);
                 if (!$success) {
                     $this->setSession('message', 'Impossible d\'ajouter votre article.');
                     $this->setSession('error_level', 'danger');
-                    exit(header('Location: /admin/add-post'));
-                } else {
-                    exit(header('Location: /admin/posts'));
                 }
-
-            } else { // When form is not filled in correctly.
-                $this->setSession('message', 'Tous les champs doivent être remplis.');
-                $this->setSession('error_level', 'info');
-                exit(header('Location: /admin/add-post'));
+                exit(header('Location: /admin/posts'));
             }
-        } // end if (isset($_POST['submitAddButton']))
+            // When form is not filled in correctly.
+            $this->setSession('message', 'Tous les champs doivent être remplis.');
+            $this->setSession('error_level', 'info');
+            exit(header('Location: /admin/add-post'));
+
+        } //end if (isset($_POST['submitAddButton']))
 
         $categories = $adminModel->getCategories();
         $this->twig->display('admin-add-post.html.twig', ['categories' => $categories]);
-    } // end addPost
+        //end addPost
+
+    }
 
 
     /**
      * Function for admin to modify a post.
+     * @param integer $idPost
      * @return void
      */
-    public function modifyPost($id)
+    public function modifyPost($idPost)
     {
         $adminModel  = new AdminModel();
         $postModel  = new PostModel();
@@ -94,55 +98,58 @@ class AdminController extends AbstractController
             if (!empty($title) && !empty($excerpt) && !empty($content) && !empty($category)) {
                  // Handle upload file.
                  $fileInputName = "image";
-                 $redirectionPage = "/admin/modify-post-$id";
+                 $redirectionPage = "/admin/modify-post-$idPost";
                  $fileName = $this->handleFileUpload($fileInputName, $redirectionPage);
 
                 // Preapare data to add into database.
                 $aData = [
-                            'id'            => $id,
-                            'title'         => $title,
-                            'excerpt'       => $excerpt,
-                            'content'       => $content,
-                            'person_id'     => 1,
-                            'category_id'   => $category,
-                            'image'         => $fileName
-                        ];
+                    'id'            => $idPost,
+                    'title'         => $title,
+                    'excerpt'       => $excerpt,
+                    'content'       => $content,
+                    'person_id'     => 1,
+                    'category_id'   => $category,
+                    'image'         => $fileName
+                ];
 
                 // Add modified post into database.
                 $success = $adminModel->modifyPost($aData);
                 if (!$success) {
                     $this->setSession('message', 'Impossible de modifier votre article.');
                     $this->setSession('error_level', 'danger');
-                    exit(header("Location: /admin/modify-post-$id"));
-                } else {
-                    exit(header("Location: /admin/post-$id"));
                 }
-
-            } else { // When form is not filled in correctly.
-                $this->setSession('message', 'Tous les champs doivent être remplis.');
-                $this->setSession('error_level', 'danger');
-                exit(header("Location: /admin/modify-post-$id"));
+                exit(header("Location: /admin/post-$idPost"));
             }
-        } // end if (isset($_POST['submitModifyButton']))
+            // When form is not filled in correctly.
+            $this->setSession('message', 'Tous les champs doivent être remplis.');
+            $this->setSession('error_level', 'danger');
+            exit(header("Location: /admin/modify-post-$idPost"));
+            
+        } //end if (isset($_POST['submitModifyButton']))
 
         $categories = $adminModel->getCategories();
-        $post = $postModel->getPost($id);
+        $post = $postModel->getPost($idPost);
         $this->twig->display('admin-modify-post.html.twig', ['post' => $post, 'categories' => $categories]);
-    } // end modifyPost
+        //end modifyPost
+
+    }
 
 
     /**
      * Function for admin to delete a post.
+     * @param integer $idPost
      * @return void
      */
-    public function deletePost($id)
+    public function deletePost($idPost)
     {
         $adminModel = new AdminModel();
-        $adminModel->deletePost($id);
+        $adminModel->deletePost($idPost);
         $this->setSession('message', 'L\'article est supprimé.');
         $this->setSession('error_level', 'info');
-        header("Location: /admin/posts");
-    } // end deletePost
+        exit(header("Location: /admin/posts"));
+        //end deletePost
+
+    }
 
 
     /**
@@ -154,33 +161,41 @@ class AdminController extends AbstractController
         $userModel = new UserModel();
         $users = $userModel->getUsers();
         $this->twig->display('admin-users.html.twig', ['users' => $users]);
-    } // end viewUsers
+        //end viewUsers
+
+    }
 
 
     /**
      * Function for admin to modify a user role.
+     * @param integer $idUser
      * @return void
      */
-    public function modifyUser($id)
+    public function modifyUser($idUser)
     {
         $adminModel = new AdminModel();
-        $adminModel->modifyUser($id);
+        $adminModel->modifyUser($idUser);
         exit(header("Location: /admin/users"));
-    } // end modifyUser
+        //end modifyUser
+
+    }
 
 
     /**
      * Function for admin to delete a user.
+     * @param integer $idUser
      * @return void
      */
-    public function deleteUser($id)
+    public function deleteUser($idUser)
     {
         $adminModel = new AdminModel();
-        $adminModel->deleteUser($id);
+        $adminModel->deleteUser($idUser);
         $this->setSession('message', 'L\'utilisateur est supprimé.');
         $this->setSession('error_level', 'info');
         exit(header("Location: /admin/users"));
-    } // end deleteUser
+        //end deleteUser
+
+    }
 
 
     /**
@@ -192,28 +207,36 @@ class AdminController extends AbstractController
         $postModel = new PostModel();
         $comments = $postModel->getComments();
         $this->twig->display('admin-comments.html.twig', ['comments' => $comments]);
-    } // end viewComments
+        //end viewComments
+
+    }
 
 
     /**
      * Function for admin to validate a comment.
+     * @param integer $idComment
      * @return void
      */
-    public function validateComment($id)
+    public function validateComment($idComment)
     {
         $adminModel = new AdminModel();
-        $adminModel->validateComment($id);
+        $adminModel->validateComment($idComment);
         exit(header("Location: /admin/comments"));
-    } // end validateComment
+        //end validateComment
+
+    }
 
     /**
      * Function to validate immediately a comment from an admin.
+     * @param integer $idPost
      * @return void
      */
-    public function validateAdminComment($id)
+    public function validateAdminComment($idPost)
     {
         $adminModel = new AdminModel();
-        $adminModel->validateAdminComment($id);
-        exit(header("Location: /post-$id"));
-    } // end validateAdminComment
+        $adminModel->validateAdminComment($idPost);
+        exit(header("Location: /post-$idPost"));
+        //end validateAdminComment
+
+    }
 }

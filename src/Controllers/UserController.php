@@ -8,6 +8,7 @@ use App\Models\UserModel;
 class UserController extends AbstractController
 {
 
+
     /**
      * Function for a new user to register.
      * @return void
@@ -46,12 +47,12 @@ class UserController extends AbstractController
 
                 // Prepare data to add into database
                 $aData = [
-                            'name'      => $username,
-                            'email'     => $email,
-                            'password'  => password_hash($password, PASSWORD_DEFAULT),
-                            'image'     => $fileName,
-                            'role_id'   => 2
-                        ];
+                    'name'      => $username,
+                    'email'     => $email,
+                    'password'  => password_hash($password, PASSWORD_DEFAULT),
+                    'image'     => $fileName,
+                    'role_id'   => 2
+                ];
 
                 // Add new user into database.
                 $success = $userModel->register($aData);
@@ -65,15 +66,18 @@ class UserController extends AbstractController
                     exit(header('Location: /login'));
                 }
 
-            } else { // When form is not filled in correctly.
-                $this->setSession('message', 'Tous les champs doivent être remplis.');
-                $this->setSession('error_level', 'danger');
-                exit(header('Location: /register'));
             }
+            // When form is not filled in correctly.
+            $this->setSession('message', 'Tous les champs doivent être remplis.');
+            $this->setSession('error_level', 'danger');
+            exit(header('Location: /register'));
+
         } // end if (isset($_POST['submitRegisterButton']))
 
         $this->twig->display('register.html.twig');
-    } // end register
+        // end register
+
+    }
 
 
     /**
@@ -109,15 +113,18 @@ class UserController extends AbstractController
                 $this->setSession('user_role', $user['role']);
                 exit(header('Location: /'));
 
-            } else { // When form is not filled in correctly.
-                $this->setSession('message', 'Tous les champs doivent être remplis.');
-                $this->setSession('error_level', 'warning');
-                exit(header('Location: /login'));
             }
+            // When form is not filled in correctly.
+            $this->setSession('message', 'Tous les champs doivent être remplis.');
+            $this->setSession('error_level', 'warning');
+            exit(header('Location: /login'));
+            
         } // end if (isset($_POST['submitLoginButton']))
 
         $this->twig->display('login.html.twig');
-    } // end login
+        // end login
+
+    }
 
 
     /**
@@ -129,8 +136,9 @@ class UserController extends AbstractController
         $this->unsetSession('user_id');
         $this->unsetSession('username');
         $this->unsetSession('user_role');
-
         exit(header("Location: /"));
-    } // end logout
+        // end logout
+
+    }
 
 }
