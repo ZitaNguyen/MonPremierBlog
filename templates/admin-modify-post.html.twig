@@ -1,65 +1,65 @@
 {% extends "layout-admin.html.twig" %}
 
 {% block title %}
-	Modifier Article-{{ post.id }}
+    Modifier Article-{{ post.id }}
 {% endblock %}
 
 {% block main %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-	<div class="container-fluid">
-		<div class="row justify-content-center">
-			<div class="col-md-10 col-lg-8 col-xl-7">
-				{% if session.message is defined %}
-				<div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
-					{{ session.message }}
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="unsetSessionMessage"></button>
-				</div>
-				{% endif %}
-				<p>Modifier votre article</p>
-				<div class="my-5">
-					<form id="modifyPost" data-sb-form-api-token="API_TOKEN" method="POST" enctype="multipart/form-data">
-						<div class="form-floating">
-							<input class="form-control" id="title" name="title" type="text" value="{{ post.title }}" data-sb-validations="required" />
-							<label for="title">Titre</label>
-							<div class="invalid-feedback" data-sb-feedback="title:required">Titre du article est obligatoire</div>
-						</div>
-						<div class="form-floating">
-							<input class="form-control" id="excerpt" name="excerpt" type="text" value="{{ post.excerpt }}" data-sb-validations="required" />
-							<label for="excerpt">Chapô</label>
-							<div class="invalid-feedback" data-sb-feedback="excerpt:required">Châpo du article est obligatoire</div>
-						</div>
-						<div class="form-floating">
-							<select class="form-select" id="category" name="category">
-								<option value="{{post.category_id}}" selected>{{ post.category_name }}</option>
-								{% for category in categories %}
-								<option value="{{category.id}}">{{ category.name }}</option>
-								{% endfor %}
-							</select>
-							<label for="category">Catégorie</label>
-							<div class="invalid-feedback" data-sb-feedback="excerpt:required">Châpo du article est obligatoire</div>
-						</div>
-						<div class="form-floating">
-							<textarea class="form-control" id="content" name="content" placeholder="Enter post content here..." style="height: 15rem" data-sb-validations="required">{{ post.content }}</textarea>
-							<label for="content">Contenu</label>
-							<div class="invalid-feedback" data-sb-feedback="content:required">Contenu du article est obligatoire.</div>
-						</div>
-						<div class="form-floating">
-							<input class="form-control" id="image" name="image" type="file" data-sb-validations="required"/>
-							<label for="image">Photo</label>
-							<div class="invalid-feedback" data-sb-feedback="image:required">Image d'en-tête du article est obligatoire</div>
-						</div>
-						<br />
-						<!-- Cancel and Submit Button-->
-						<div class="d-grid gap-2 d-flex justify-content-center">
-							<a class="btn btn-secondary text-uppercase me-2" href="/admin/post-{{ post.id }}" role="button">Annuler</a>
-							<button class="btn btn-dark text-uppercase" name="submitModifyButton" type="submit">Enregistrer</button>
-						</div>
-						<div class="text-center mt-3"></div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                {% if session.message is defined %}
+                <div class="alert alert-{{ session.error_level}} alert-dismissible fade show" role="alert">
+                    {{ session.message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="unsetSessionMessage"></button>
+                </div>
+                {% endif %}
+                <p>Modifier votre article</p>
+                <div class="my-5">
+                    <form id="modifyPost" data-sb-form-api-token="API_TOKEN" method="POST" enctype="multipart/form-data">
+                        <div class="form-floating">
+                            <input class="form-control" id="title" name="title" type="text" value="{{ post.title }}" data-sb-validations="required" />
+                            <label for="title">Titre</label>
+                            <div class="invalid-feedback" data-sb-feedback="title:required">Titre du article est obligatoire</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="excerpt" name="excerpt" type="text" value="{{ post.excerpt }}" data-sb-validations="required" />
+                            <label for="excerpt">Chapô</label>
+                            <div class="invalid-feedback" data-sb-feedback="excerpt:required">Châpo du article est obligatoire</div>
+                        </div>
+                        <div class="form-floating">
+                            <select class="form-select" id="category" name="category">
+                                <option value="{{post.category_id}}" selected>{{ post.category_name }}</option>
+                                {% for category in categories %}
+                                <option value="{{category.id}}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="category">Catégorie</label>
+                            <div class="invalid-feedback" data-sb-feedback="excerpt:required">Châpo du article est obligatoire</div>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" id="content" name="content" placeholder="Enter post content here..." style="height: 15rem" data-sb-validations="required">{{ post.content }}</textarea>
+                            <label for="content">Contenu</label>
+                            <div class="invalid-feedback" data-sb-feedback="content:required">Contenu du article est obligatoire.</div>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" id="image" name="image" type="file" data-sb-validations="required"/>
+                            <label for="image">Photo</label>
+                            <div class="invalid-feedback" data-sb-feedback="image:required">Image d'en-tête du article est obligatoire</div>
+                        </div>
+                        <br />
+                        <!-- Cancel and Submit Button-->
+                        <div class="d-grid gap-2 d-flex justify-content-center">
+                            <a class="btn btn-secondary text-uppercase me-2" href="/admin/post-{{ post.id }}" role="button">Annuler</a>
+                            <button class="btn btn-dark text-uppercase" name="submitModifyButton" type="submit">Enregistrer</button>
+                        </div>
+                        <div class="text-center mt-3"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 {% endblock %}

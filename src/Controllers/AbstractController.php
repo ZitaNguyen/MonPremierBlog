@@ -22,31 +22,38 @@ class AbstractController
         $loader = new FilesystemLoader('templates');
         $this->twig = new Environment($loader);
         $this->twig->addGlobal('session', $_SESSION);
+
     }
 
 
     /**
      * Function to set session value.
+     * @param string $key
+     * @param string $value
      * @return void
      */
     public function setSession($key, $value)
     {
         $_SESSION[$key] = $value;
+
     }
 
 
     /**
      * Function to get session value
+     * @param string $key
      * @return string $_SESSION[$key] or null
      */
     public function getSession($key, $default = null)
     {
         return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
+
     }
 
 
     /**
      * Function to unset session value.
+     * @param string $key
      * @return void
      */
     public function unsetSession($key)
@@ -54,6 +61,7 @@ class AbstractController
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
         }
+
     }
 
 
@@ -69,21 +77,26 @@ class AbstractController
         if (isset($_SESSION['error_level'])) {
             unset($_SESSION['error_level']);
         }
+
     }
 
 
     /**
      * Function to get value from $_POST.
+     * @param string $key
      * @return string $_POST[$key] or null
      */
     public function getPostValue($key, $default = null)
     {
         return isset($_POST[$key]) ? $_POST[$key] : $default;
+
     }
 
 
     /**
      * Function to handle uploaded file
+     * @param string $name
+     * @param string $redirectionPage
      * @return string $fileName
      */
     public function handleFileUpload($name, $redirectionPage)
@@ -120,6 +133,9 @@ class AbstractController
         }
 
         return $fileName;
-    } // end handleFileUpload
+        //end handleFileUpload
+        
+    }
+
 
 }

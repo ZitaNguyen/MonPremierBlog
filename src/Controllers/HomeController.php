@@ -10,6 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 
 class HomeController extends AbstractController
 {
+    
 
     /**
      * Function to view home page for site, which includes a contact form.
@@ -62,6 +63,7 @@ class HomeController extends AbstractController
         $postModel  = new PostModel;
         $post = $postModel->getLastPost();
         $this->twig->display('home.html.twig', ['post' => $post]);
+
     }
-    
+
 }
