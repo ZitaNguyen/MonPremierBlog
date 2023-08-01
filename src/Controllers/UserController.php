@@ -60,11 +60,10 @@ class UserController extends AbstractController
                     $this->setSession('message', 'Impossible de créer votre compte.');
                     $this->setSession('error_level', 'danger');
                     exit(header('Location: /register'));
-                } else {
-                    $this->setSession('message', 'Vous avez réussi à créer votre compte. Veuillez connecter.');
-                    $this->setSession('error_level', 'success');
-                    exit(header('Location: /login'));
                 }
+                $this->setSession('message', 'Vous avez réussi à créer votre compte. Veuillez connecter.');
+                $this->setSession('error_level', 'success');
+                exit(header('Location: /login'));
 
             }
             // When form is not filled in correctly.
@@ -118,7 +117,7 @@ class UserController extends AbstractController
             $this->setSession('message', 'Tous les champs doivent être remplis.');
             $this->setSession('error_level', 'warning');
             exit(header('Location: /login'));
-            
+
         } // end if (isset($_POST['submitLoginButton']))
 
         $this->twig->display('login.html.twig');

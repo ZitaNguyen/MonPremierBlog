@@ -13,11 +13,14 @@ class UserModel
     public function __construct()
     {
         $this->Db = new Database();
+
     }
 
 
     /**
      * Query to add a new user to the database.
+     * @param array $aData
+     * @return boolean true if the query was successfully executed, false otherwise.
      */
     public function register($aData)
     {
@@ -36,6 +39,8 @@ class UserModel
 
     /**
      * Query to get info of a user by email.
+     * @param string $email
+     * @return array of user info
      */
     public function getUser($email)
     {
@@ -52,6 +57,8 @@ class UserModel
 
     /**
      * Query to add a comment for a post.
+     * @param array $aData
+     * @return boolean true if the query was successfully executed, false otherwise.
      */
     public function addComment($aData)
     {
@@ -69,6 +76,7 @@ class UserModel
 
     /**
      * Query to get all users.
+     * @return array of all users and their infos
      */
     public function getUsers()
     {
@@ -79,4 +87,6 @@ class UserModel
         $sql->execute();
         return $sql->fetchAll();
     }
+
+    
 }

@@ -6,7 +6,7 @@ use App\Controllers\AbstractController;
 
 class ErrorController extends AbstractController
 {
-    
+
 
     /**
      * Function to return a 404 page.
@@ -18,4 +18,6 @@ class ErrorController extends AbstractController
         $this->twig->display('404.html.twig');
 
     }
+
+    
 }
