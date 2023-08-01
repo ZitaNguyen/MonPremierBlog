@@ -10,89 +10,74 @@ use App\Models\UserModel;
 class AdminController extends AbstractController
 {
 
-
     /**
      * Function to show all posts at admin page.
+     * @return void
      */
     public function displayAdminPostsPage()
     {
         $postModel  = new PostModel();
         $posts = $postModel->getPosts();
         $this->twig->display('admin-posts.html.twig', ['posts' => $posts]);
-    }
-    // end displayAdminPostsPage
+    } // end displayAdminPostsPage
 
 
     /**
      * Function for admin to add new post.
+     * @return void
      */
     public function addPost()
     {
         $adminModel  = new AdminModel();
 
         if (isset($_POST['submitAddButton'])) {
-            if (!empty($_POST['title']) && !empty($_POST['excerpt']) && !empty($_POST['content']) && !empty($_POST['category'])) {
-                if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
-                    $file = $_FILES["image"];
+            // Get value from $_POST.
+            $title = $this->getPostValue('title');
+            $excerpt = $this->getPostValue('excerpt');
+            $content = $this->getPostValue('content');
+            $category = $this->getPostValue('category');
 
-                    // Check extension format.
-                    $extensions = ['.png','.jpg','.jpeg','.gif','.PNG','.JPG','.JPEG','.GIF'];
-                    $extension = strrchr($file["name"], '.');
-                    if (!in_array($extension,$extensions)) {
-                        $_SESSION['message'] = 'Cette image n\'est pas valable.';
-                        $_SESSION['error_level'] = 'warning';
-                        header('Location: /admin/add-post');
-                    }
+            if (!empty($title) && !empty($excerpt) && !empty($content) && !empty($category)) {
+                // Handle upload file.
+                $fileInputName = "image";
+                $redirectionPage = '/admin/add-post';
+                $fileName = $this->handleFileUpload($fileInputName, $redirectionPage);
 
-                    // Specify the directory to which you want to save the uploaded image.
-                    $targetDir = "public/assets/img/";
-
-                    // Generate a unique name for the image to avoid conflicts.
-                    $fileName = uniqid()."_".$file["name"];
-
-                    // Create the full path of the target file.
-                    $targetFilePath = $targetDir.$fileName;
-
-                    // Move the uploaded file to the target location.
-                    if (!move_uploaded_file($file["tmp_name"], $targetFilePath)) {
-                        $_SESSION['message'] = 'Impossible de télécharger la photo.';
-                        $_SESSION['error_level'] = 'warning';
-                        header('Location: /admin/add-post');
-                    }
-                }
-
+                // Prepare data to add into database.
                 $aData = [
-                            'title'         => $_POST['title'],
-                            'excerpt'       => $_POST['excerpt'],
-                            'content'       => $_POST['content'],
+                            'title'         => $title,
+                            'excerpt'       => $excerpt,
+                            'content'       => $content,
                             'person_id'     => 1,
-                            'category_id'   => $_POST['category'],
+                            'category_id'   => $category,
                             'image'         => $fileName
                         ];
 
+                // Add post into database.
                 $success = $adminModel->addPost($aData);
                 if (!$success) {
-                    $_SESSION['message'] = 'Impossible d\'ajouter votre article.';
-                    $_SESSION['error_level'] = 'danger';
-                    header('Location: /admin/add-post');
+                    $this->setSession('message', 'Impossible d\'ajouter votre article.');
+                    $this->setSession('error_level', 'danger');
+                    exit(header('Location: /admin/add-post'));
                 } else {
-                    header('Location: /admin/posts');
+                    exit(header('Location: /admin/posts'));
                 }
-            } else {
-                $_SESSION['message'] = 'Tous les champs doivent être remplis.';
-                $_SESSION['error_level'] = 'info';
-                header('Location: /admin/add-post');
+
+            } else { // When form is not filled in correctly.
+                $this->setSession('message', 'Tous les champs doivent être remplis.');
+                $this->setSession('error_level', 'info');
+                exit(header('Location: /admin/add-post'));
             }
-        }
+        } // end if (isset($_POST['submitAddButton']))
 
         $categories = $adminModel->getCategories();
         $this->twig->display('admin-add-post.html.twig', ['categories' => $categories]);
-    }
-    // end addPost
+    } // end addPost
 
 
     /**
      * Function for admin to modify a post.
+     * @return void
      */
     public function modifyPost($id)
     {
@@ -100,153 +85,135 @@ class AdminController extends AbstractController
         $postModel  = new PostModel();
 
         if (isset($_POST['submitModifyButton'])) {
-            if (!empty($_POST['title']) && !empty($_POST['excerpt']) && !empty($_POST['content']) && !empty($_POST['category'])) {
-                if(isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
-                    $file = $_FILES["image"];
+            // Get value from $_POST.
+            $title = $this->getPostValue('title');
+            $excerpt = $this->getPostValue('excerpt');
+            $content = $this->getPostValue('content');
+            $category = $this->getPostValue('category');
 
-                    // Specify the directory to which you want to save the uploaded image.
-                    $targetDir = "public/assets/img/";
+            if (!empty($title) && !empty($excerpt) && !empty($content) && !empty($category)) {
+                 // Handle upload file.
+                 $fileInputName = "image";
+                 $redirectionPage = "/admin/modify-post-$id";
+                 $fileName = $this->handleFileUpload($fileInputName, $redirectionPage);
 
-                    // Check extension format.
-                    $extensions = ['.png','.jpg','.jpeg','.gif','.PNG','.JPG','.JPEG','.GIF'];
-                    $extension = strrchr($file["name"], '.');
-                    if (!in_array($extension,$extensions)) {
-                        $_SESSION['message'] = 'Cette photo n\'est pas valable.';
-                        $_SESSION['error_level'] = 'warning';
-                        header("Location: /admin/modify-post-$id");
-                    }
-
-                    // Generate a unique name for the image to avoid conflicts.
-                    $fileName = uniqid()."_".$file["name"];
-
-                    // Create the full path of the target file.
-                    $targetFilePath = $targetDir.$fileName;
-
-                    // Move the uploaded file to the target location.
-                    if(!move_uploaded_file($file["tmp_name"], $targetFilePath)) {
-                        $_SESSION['message'] = 'Impossible de télécharger la photo.';
-                        $_SESSION['error_level'] = 'danger';
-                        header("Location: /admin/modify-post-$id");
-                    }
-                } else {
-                    $_SESSION['message'] = 'Le champ photo est obligatoire.';
-                    $_SESSION['error_level'] = 'danger';
-                    header("Location: /admin/modify-post-$id");
-                }
-
+                // Preapare data to add into database.
                 $aData = [
-                            'id' => $id,
-                            'title' => $_POST['title'],
-                            'excerpt' => $_POST['excerpt'],
-                            'content' => $_POST['content'],
-                            'person_id' => 1,
-                            'category_id' => $_POST['category'],
-                            'image' => $fileName
+                            'id'            => $id,
+                            'title'         => $title,
+                            'excerpt'       => $excerpt,
+                            'content'       => $content,
+                            'person_id'     => 1,
+                            'category_id'   => $category,
+                            'image'         => $fileName
                         ];
 
+                // Add modified post into database.
                 $success = $adminModel->modifyPost($aData);
                 if (!$success) {
-                    $_SESSION['message'] = 'Impossible de modifier votre article.';
-                    $_SESSION['error_level'] = 'danger';
-                    header("Location: /admin/modify-post-$id");
+                    $this->setSession('message', 'Impossible de modifier votre article.');
+                    $this->setSession('error_level', 'danger');
+                    exit(header("Location: /admin/modify-post-$id"));
                 } else {
-                    header("Location: /admin/post-$id");
+                    exit(header("Location: /admin/post-$id"));
                 }
-            } else {
-                $_SESSION['message'] = 'Tous les champs doivent être remplis.';
-                $_SESSION['error_level'] = 'danger';
-                header("Location: /admin/modify-post-$id");
+
+            } else { // When form is not filled in correctly.
+                $this->setSession('message', 'Tous les champs doivent être remplis.');
+                $this->setSession('error_level', 'danger');
+                exit(header("Location: /admin/modify-post-$id"));
             }
-        }
+        } // end if (isset($_POST['submitModifyButton']))
 
         $categories = $adminModel->getCategories();
         $post = $postModel->getPost($id);
         $this->twig->display('admin-modify-post.html.twig', ['post' => $post, 'categories' => $categories]);
-    }
-    // end modifyPost
+    } // end modifyPost
 
 
     /**
      * Function for admin to delete a post.
+     * @return void
      */
     public function deletePost($id)
     {
         $adminModel = new AdminModel();
         $adminModel->deletePost($id);
-        $_SESSION['message'] = 'L\'article est supprimé';
-        $_SESSION['error_level'] = 'info';
+        $this->setSession('message', 'L\'article est supprimé.');
+        $this->setSession('error_level', 'info');
         header("Location: /admin/posts");
-    }
-    // end deletePost
+    } // end deletePost
 
 
     /**
      * Function to show all users.
+     * @return void
      */
     public function viewUsers()
     {
         $userModel = new UserModel();
         $users = $userModel->getUsers();
         $this->twig->display('admin-users.html.twig', ['users' => $users]);
-    }
-    // end viewUsers
+    } // end viewUsers
 
 
     /**
      * Function for admin to modify a user role.
+     * @return void
      */
     public function modifyUser($id)
     {
         $adminModel = new AdminModel();
         $adminModel->modifyUser($id);
-        header("Location: /admin/users");
-    }
-    // end modifyUser
+        exit(header("Location: /admin/users"));
+    } // end modifyUser
 
 
     /**
      * Function for admin to delete a user.
+     * @return void
      */
     public function deleteUser($id)
     {
         $adminModel = new AdminModel();
         $adminModel->deleteUser($id);
-        $_SESSION['message'] = 'L\'utilisateur est supprimé';
-        $_SESSION['error_level'] = 'info';
-        header("Location: /admin/users");
-    }
-    // end deleteUser
+        $this->setSession('message', 'L\'utilisateur est supprimé.');
+        $this->setSession('error_level', 'info');
+        exit(header("Location: /admin/users"));
+    } // end deleteUser
 
 
     /**
      * Function for admin to see all comments.
+     * @return void
      */
     public function viewComments()
     {
         $postModel = new PostModel();
         $comments = $postModel->getComments();
         $this->twig->display('admin-comments.html.twig', ['comments' => $comments]);
-    }
-    // end viewComments
+    } // end viewComments
 
 
     /**
      * Function for admin to validate a comment.
+     * @return void
      */
     public function validateComment($id)
     {
         $adminModel = new AdminModel();
         $adminModel->validateComment($id);
-        header("Location: /admin/comments");
-    }
+        exit(header("Location: /admin/comments"));
+    } // end validateComment
 
     /**
      * Function to validate immediately a comment from an admin.
+     * @return void
      */
     public function validateAdminComment($id)
     {
         $adminModel = new AdminModel();
         $adminModel->validateAdminComment($id);
-        header("Location: /post-$id");
-    }
+        exit(header("Location: /post-$id"));
+    } // end validateAdminComment
 }
