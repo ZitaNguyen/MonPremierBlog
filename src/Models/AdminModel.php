@@ -42,7 +42,9 @@ class AdminModel
     {
         $sql = $this->Db->prepare(
             "UPDATE Post
-            SET title = :title, excerpt = :excerpt, content = :content, person_id = :person_id, category_id = :category_id, image = :image
+            SET title = :title, excerpt = :excerpt, content = :content,
+                person_id = :person_id, category_id = :category_id,
+                image = :image, modify_date = NOW()
             WHERE id = :id"
         );
         $sql->bindValue(':title', $aData['title'], \PDO::PARAM_STR);
