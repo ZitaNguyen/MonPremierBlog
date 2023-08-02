@@ -51,7 +51,7 @@ class AdminController extends AbstractController
                     'title'         => $title,
                     'excerpt'       => $excerpt,
                     'content'       => $content,
-                    'person_id'     => 1,
+                    'person_id'     => $this->getSession('user_id'),
                     'category_id'   => $category,
                     'image'         => $fileName
                 ];
@@ -107,7 +107,7 @@ class AdminController extends AbstractController
                     'title'         => $title,
                     'excerpt'       => $excerpt,
                     'content'       => $content,
-                    'person_id'     => 1,
+                    'person_id'     => $this->getSession('user_id'),
                     'category_id'   => $category,
                     'image'         => $fileName
                 ];
@@ -124,7 +124,7 @@ class AdminController extends AbstractController
             $this->setSession('message', 'Tous les champs doivent être remplis.');
             $this->setSession('error_level', 'danger');
             exit(header("Location: /admin/modify-post-$idPost"));
-            
+
         } //end if (isset($_POST['submitModifyButton']))
 
         $categories = $adminModel->getCategories();

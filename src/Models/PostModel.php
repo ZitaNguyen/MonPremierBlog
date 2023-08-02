@@ -63,7 +63,7 @@ class PostModel
     public function getLastPost()
     {
         $sql = $this->Database->prepare(
-            "SELECT p.id, p.title, p.excerpt, DATE_FORMAT(p.modify_date, '%d/%m/%Y') AS modifyDate, ps.name
+            "SELECT p.id, p.title, p.excerpt, DATE_FORMAT(p.modify_date, '%d/%m/%Y') AS modifyDate, ps.name, p.image
             FROM Post p
             INNER JOIN Person ps ON p.person_id = ps.id
             ORDER BY create_date DESC
@@ -111,5 +111,5 @@ class PostModel
         return $sql->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    
+
 }
