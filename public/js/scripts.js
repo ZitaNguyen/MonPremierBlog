@@ -27,3 +27,31 @@ window.addEventListener('DOMContentLoaded', () => {
         scrollPos = currentTop;
     });
 })
+
+// Active menu link
+const navLinks = document.querySelectorAll('.nav-link');
+const currentPath = window.location.pathname;
+navLinks.forEach(link => {
+    if (link.getAttribute('href') === currentPath) {
+        link.classList.add('active');
+    } else {
+        link.classList.remove('active');
+    }
+});
+
+// Unset session message
+document.getElementById('unsetSessionMessage').addEventListener('click', function() {
+    console.log('Click event triggered.');
+    // Send an HTTP request to the controller function using fetch
+    fetch('/unset')
+        .then((response) => {
+            if (response.ok) {
+                console.log('Session variable "message" unset successfully.');
+            } else {
+                console.error('Failed to unset session variable "message".');
+            }
+        })
+        .catch((error) => {
+            console.error('An error occurred:', error);
+        });
+});

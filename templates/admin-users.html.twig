@@ -18,9 +18,9 @@
             <div class="col">
                 <div class="card h-100">
                     {% if user.image is empty %}
-                    <img src="/public/assets/img/default_profile.png" class="card-img-top img-fluid h-50" alt="default_image">
+                    <img src="/public/assets/img/default_profile.png" class="card-img-top img-fluid" alt="default_image">
                     {% else %}
-                    <img src="/public/assets/img/{{ user.image }}" class="card-img-top img-fluid h-50" alt="profile_image">
+                    <img src="/public/assets/img/{{ user.image }}" class="card-img-top img-fluid" alt="profile_image">
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ user.name | upper }}</h5>
